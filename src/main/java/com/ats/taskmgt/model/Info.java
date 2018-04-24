@@ -1,4 +1,4 @@
-package com.ats.taskmgt.controller;
+package com.ats.taskmgt.model;
 
 public class Info {
 	
