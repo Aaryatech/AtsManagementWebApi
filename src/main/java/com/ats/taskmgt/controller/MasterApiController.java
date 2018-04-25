@@ -15,6 +15,7 @@ import com.ats.taskmgt.model.Employee;
 import com.ats.taskmgt.model.FormType;
 import com.ats.taskmgt.model.Forms;
 import com.ats.taskmgt.model.Info;
+import com.ats.taskmgt.model.LoginResponse;
 import com.ats.taskmgt.model.Module;
 import com.ats.taskmgt.model.Project;
 import com.ats.taskmgt.model.Task;
@@ -373,6 +374,35 @@ public class MasterApiController {
 		}
 		return taskList;
 
+	}
+	
+	
+	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
+	public @ResponseBody LoginResponse findByEmpNameAndEmpPwd(@RequestParam("empMobile") String empMobile,
+			@RequestParam("empPwd") String empPwd) {
+
+		Employee employee = employeeRepository.findByEmpMobileAndEmpPwd(empMobile, empPwd);
+
+		LoginResponse loginResponse = new LoginResponse();
+
+		if (employee == null) {
+			employee = new Employee();
+			loginResponse.setEmployee(employee);
+			
+			loginResponse.setError(true);
+			loginResponse.setMsg("Invalid");
+
+			
+		} else {
+
+			loginResponse.setEmployee(employee);
+			loginResponse.setError(false);
+			loginResponse.setMsg("login Successfully");
+
+	
+		}
+
+		return loginResponse;
 	}
 
 }
