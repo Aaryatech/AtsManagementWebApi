@@ -377,15 +377,18 @@ public class MasterApiController {
 	// -----------------------------------task------------------------
 
 	@RequestMapping(value = { "/saveTask" }, method = RequestMethod.POST)
-	public @ResponseBody String saveTask(@RequestBody List<Task> postTaskList) {
-
+	public @ResponseBody List<Task> saveTask(@RequestBody List<Task> postTaskList) {
+		List<Task> responseTaskList = new ArrayList<Task>();
 		try {
+			
+			
 			for (int i = 0; i < postTaskList.size(); i++) {
 
-				Task tas = new Task();
+				Task tas=null;
 
 				tas = taskRepository.saveAndFlush(postTaskList.get(i));
-
+				System.err.println("task responnse " +tas);
+				responseTaskList.add(tas);
 			}
 
 		} catch (Exception e) {
@@ -393,7 +396,7 @@ public class MasterApiController {
 			e.printStackTrace();
 
 		}
-		return "success";
+		return responseTaskList;
 
 	}
 
