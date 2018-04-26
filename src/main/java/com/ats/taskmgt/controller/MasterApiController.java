@@ -19,6 +19,7 @@ import com.ats.taskmgt.model.Forms;
 import com.ats.taskmgt.model.GetFormList;
 import com.ats.taskmgt.model.GetModuleProject;
 import com.ats.taskmgt.model.GetProjects;
+import com.ats.taskmgt.model.GetTask;
 import com.ats.taskmgt.model.Info;
 import com.ats.taskmgt.model.LoginResponse;
 import com.ats.taskmgt.model.Module;
@@ -31,6 +32,7 @@ import com.ats.taskmgt.repository.FormsRepository;
 import com.ats.taskmgt.repository.GetFormListRepository;
 import com.ats.taskmgt.repository.GetModuleProjectRepo;
 import com.ats.taskmgt.repository.GetProjectsRepo;
+import com.ats.taskmgt.repository.GetTaskRepository;
 import com.ats.taskmgt.repository.ModuleRepository;
 import com.ats.taskmgt.repository.ProjectRepository;
 import com.ats.taskmgt.repository.TaskRepository;
@@ -71,6 +73,9 @@ public class MasterApiController {
 
 	@Autowired
 	GetFormListRepository getFormListRepository;
+	
+	@Autowired
+	GetTaskRepository getTaskRepository;
 
 	// ----------------------------------------Employee----------------------------------------------------
 
@@ -401,12 +406,12 @@ public class MasterApiController {
 	}
 
 	@RequestMapping(value = { "/taskByFormId" }, method = RequestMethod.POST)
-	public @ResponseBody List<Task> taskByFormId(@RequestParam("formId") int formId) {
+	public @ResponseBody List<GetTask> taskByFormId(@RequestParam("formId") int formId) {
 
-		List<Task> taskList = new ArrayList<Task>();
+		List<GetTask> taskList = new ArrayList<GetTask>();
 
 		try {
-			taskList = taskRepository.findByFormId(formId);
+			taskList = getTaskRepository.findByFormId(formId);
 
 		} catch (Exception e) {
 
