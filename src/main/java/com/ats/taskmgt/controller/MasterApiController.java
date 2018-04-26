@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.taskmgt.model.Employee;
 import com.ats.taskmgt.model.FormType;
 import com.ats.taskmgt.model.Forms;
+import com.ats.taskmgt.model.GetProjects;
 import com.ats.taskmgt.model.Info;
 import com.ats.taskmgt.model.LoginResponse;
 import com.ats.taskmgt.model.Module;
@@ -23,6 +24,7 @@ import com.ats.taskmgt.model.TaskType;
 import com.ats.taskmgt.repository.EmployeeRepository;
 import com.ats.taskmgt.repository.FormTypeRepository;
 import com.ats.taskmgt.repository.FormsRepository;
+import com.ats.taskmgt.repository.GetProjectsRepo;
 import com.ats.taskmgt.repository.ModuleRepository;
 import com.ats.taskmgt.repository.ProjectRepository;
 import com.ats.taskmgt.repository.TaskRepository;
@@ -55,6 +57,11 @@ public class MasterApiController {
 	
 	@Autowired
 	TaskRepository taskRepository;
+	
+	@Autowired
+	GetProjectsRepo getProjectsRepo;
+	
+	
 	
 	//----------------------------------------Employee----------------------------------------------------
 	
@@ -215,6 +222,24 @@ public class MasterApiController {
 		try {
 			
 			projectList = projectRepository.findAll();
+			 
+		} catch (Exception e) { 
+			
+			e.printStackTrace(); 
+
+		}
+		return projectList;
+
+	}
+	
+	@RequestMapping(value = { "/getProjectList" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetProjects> getProjectList() {
+
+		List<GetProjects> projectList = new ArrayList<GetProjects>(); 
+		
+		try {
+			
+			projectList = getProjectsRepo.getAllProjects();
 			 
 		} catch (Exception e) { 
 			

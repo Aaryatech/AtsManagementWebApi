@@ -16,7 +16,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Project {
 	
 	
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="project_id")
@@ -29,7 +28,7 @@ public class Project {
 	private String projectDescription;
 	
 	@Column(name="reference_by")
-	private int referenceBy;
+	private String referenceBy;
 	
 	@Column(name="project_cost")
 	private String projectCost;
@@ -76,11 +75,12 @@ public class Project {
 		this.projectDescription = projectDescription;
 	}
 
-	public int getReferenceBy() {
+	
+	public String getReferenceBy() {
 		return referenceBy;
 	}
 
-	public void setReferenceBy(int referenceBy) {
+	public void setReferenceBy(String referenceBy) {
 		this.referenceBy = referenceBy;
 	}
 
@@ -103,6 +103,7 @@ public class Project {
 	public Date getProjectStartDate() {
 		return projectStartDate;
 	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 
 	public void setProjectStartDate(Date projectStartDate) {
 		this.projectStartDate = projectStartDate;
@@ -135,6 +136,7 @@ public class Project {
 	public Date getProjectEndDate() {
 		return projectEndDate;
 	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 
 	public void setProjectEndDate(Date projectEndDate) {
 		this.projectEndDate = projectEndDate;
