@@ -1,7 +1,5 @@
 package com.ats.taskmgt.model;
-
-import java.util.Date;
-
+ 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,8 +12,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name = "m_employee")
 public class Employee {
-	
-	
+	 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="emp_id")
@@ -31,7 +28,7 @@ public class Employee {
 	private String empEdu;
 	
 	@Column(name="emp_birthdate")
-	private Date empBirthdate;
+	private String empBirthdate;
 	
 	@Column(name="emp_designation")
 	private String empDesignation;
@@ -43,7 +40,7 @@ public class Employee {
 	private String empPrevExp;
 	
 	@Column(name="emp_joining_date")
-	private Date empJoiningDate;
+	private String empJoiningDate;
 	
 	@Column(name="is_used")
 	private int isUsed;
@@ -85,12 +82,12 @@ public class Employee {
 	public void setEmpEdu(String empEdu) {
 		this.empEdu = empEdu;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getEmpBirthdate() {
+	 
+	public String getEmpBirthdate() {
 		return empBirthdate;
 	}
 
-	public void setEmpBirthdate(Date empBirthdate) {
+	public void setEmpBirthdate(String empBirthdate) {
 		this.empBirthdate = empBirthdate;
 	}
 
@@ -117,12 +114,12 @@ public class Employee {
 	public void setEmpPrevExp(String empPrevExp) {
 		this.empPrevExp = empPrevExp;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getEmpJoiningDate() {
+	 
+	public String getEmpJoiningDate() {
 		return empJoiningDate;
 	}
 
-	public void setEmpJoiningDate(Date empJoiningDate) {
+	public void setEmpJoiningDate(String empJoiningDate) {
 		this.empJoiningDate = empJoiningDate;
 	}
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.taskmgt.common.DateConvertor;
 import com.ats.taskmgt.model.Employee;
 import com.ats.taskmgt.model.FormType;
 import com.ats.taskmgt.model.Forms;
@@ -29,6 +30,8 @@ import com.ats.taskmgt.repository.ModuleRepository;
 import com.ats.taskmgt.repository.ProjectRepository;
 import com.ats.taskmgt.repository.TaskRepository;
 import com.ats.taskmgt.repository.TaskTypeRepository;
+
+import ch.qos.logback.classic.pattern.DateConverter;
  ;
  
 
@@ -71,6 +74,9 @@ public class MasterApiController {
 		Employee emp = new Employee(); 
 		
 		try {
+			
+			employee.setEmpBirthdate(DateConvertor.convertToYMD(employee.getEmpBirthdate()));
+			employee.setEmpJoiningDate(DateConvertor.convertToYMD(employee.getEmpJoiningDate()));
 			emp = employeeRepository.saveAndFlush(employee);
             
 		} catch (Exception e) {
@@ -119,6 +125,8 @@ public class MasterApiController {
 		
 		try {
 			 employee = employeeRepository.findByEmpIdAndIsUsed(empId,0);
+			 employee.setEmpBirthdate(DateConvertor.convertToDMY(employee.getEmpBirthdate()));
+			 employee.setEmpJoiningDate(DateConvertor.convertToDMY(employee.getEmpJoiningDate()));
 			 
 		} catch (Exception e) { 
 			
@@ -137,6 +145,11 @@ public class MasterApiController {
 		try {
 			
 			employeeList = employeeRepository.findByIsUsed(0);
+			for(int i = 0;i<employeeList.size();i++)
+			{
+				employeeList.get(i).setEmpBirthdate(DateConvertor.convertToDMY(employeeList.get(i).getEmpBirthdate()));
+				employeeList.get(i).setEmpJoiningDate(DateConvertor.convertToDMY(employeeList.get(i).getEmpJoiningDate()));
+			}
 			 
 		} catch (Exception e) { 
 			
