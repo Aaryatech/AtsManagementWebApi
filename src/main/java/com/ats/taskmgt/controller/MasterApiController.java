@@ -68,7 +68,7 @@ public class MasterApiController {
 
 	@Autowired
 	GetModuleProjectRepo getModuleProjectRepo;
-	
+
 	@Autowired
 	GetFormListRepository getFormListRepository;
 
@@ -377,19 +377,23 @@ public class MasterApiController {
 	// -----------------------------------task------------------------
 
 	@RequestMapping(value = { "/saveTask" }, method = RequestMethod.POST)
-	public @ResponseBody Task saveTask(@RequestBody Task task) {
-
-		Task tas = new Task();
+	public @ResponseBody String saveTask(@RequestBody List<Task> postTaskList) {
 
 		try {
-			tas = taskRepository.saveAndFlush(task);
+			for (int i = 0; i < postTaskList.size(); i++) {
+
+				Task tas = new Task();
+
+				tas = taskRepository.saveAndFlush(postTaskList.get(i));
+
+			}
 
 		} catch (Exception e) {
 
 			e.printStackTrace();
 
 		}
-		return tas;
+		return "success";
 
 	}
 
@@ -453,14 +457,12 @@ public class MasterApiController {
 		return ModuleProjectList;
 
 	}
-	
-	
+
 	@RequestMapping(value = { "/getFormListByProjectId" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetFormList> getFormListByProjectId(@RequestParam("projectId") int projectId ) {
+	public @ResponseBody List<GetFormList> getFormListByProjectId(@RequestParam("projectId") int projectId) {
 
 		List<GetFormList> getFormList = getFormListRepository.getFormListByProjectId(projectId);
 
-		  
 		return getFormList;
 	}
 
