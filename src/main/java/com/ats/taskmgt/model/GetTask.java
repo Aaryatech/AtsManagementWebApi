@@ -1,17 +1,18 @@
 package com.ats.taskmgt.model;
- 
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
- 
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name = "t_task")
-public class Task {
+public class GetTask {
+	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -52,7 +53,7 @@ public class Task {
 	private int assignedBy;
 	
 	@Column(name="start_date")
-	private String startDate;
+	private Date startDate;
 	
 	@Column(name="start_datetime")
 	private String startDatetime;
@@ -61,7 +62,7 @@ public class Task {
 	private String devComplPer;
 	
 	@Column(name="end_date")
-	private String endDate;
+	private Date endDate;
 	
 	@Column(name="end_datetime")
 	private String endDatetime;
@@ -77,6 +78,18 @@ public class Task {
 	
 	@Column(name="remarks_by_dev")
 	private String remarksByDev;
+	
+	@Column(name="project_name")
+	private String projectName;
+	
+	@Column(name="module_name")
+	private String moduleName;
+	
+	@Column(name="form_name")
+	private String formName;
+	
+	@Column(name="task_type_name")
+	private String taskTypeName;
 
 	public int getTaskId() {
 		return taskId;
@@ -173,12 +186,12 @@ public class Task {
 	public void setAssignedBy(int assignedBy) {
 		this.assignedBy = assignedBy;
 	}
-	
-	public String getStartDate() {
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(String startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
@@ -197,12 +210,12 @@ public class Task {
 	public void setDevComplPer(String devComplPer) {
 		this.devComplPer = devComplPer;
 	}
-	 
-	public String getEndDate() {
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(String endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 
@@ -246,18 +259,37 @@ public class Task {
 		this.remarksByDev = remarksByDev;
 	}
 
-	@Override
-	public String toString() {
-		return "Task [taskId=" + taskId + ", projectId=" + projectId + ", moduleId=" + moduleId + ", formId=" + formId
-				+ ", taskTypeId=" + taskTypeId + ", taskName=" + taskName + ", taskDescription=" + taskDescription
-				+ ", taskSpRemarks=" + taskSpRemarks + ", taskPlannedHrs=" + taskPlannedHrs + ", developerId="
-				+ developerId + ", testerId=" + testerId + ", assignedBy=" + assignedBy + ", startDate=" + startDate
-				+ ", startDatetime=" + startDatetime + ", devComplPer=" + devComplPer + ", endDate=" + endDate
-				+ ", endDatetime=" + endDatetime + ", devStatus=" + devStatus + ", actualReqHrs=" + actualReqHrs
-				+ ", testerStatus=" + testerStatus + ", remarksByDev=" + remarksByDev + "]";
+	public String getProjectName() {
+		return projectName;
 	}
-	
-	
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	public String getModuleName() {
+		return moduleName;
+	}
+
+	public void setModuleName(String moduleName) {
+		this.moduleName = moduleName;
+	}
+
+	public String getFormName() {
+		return formName;
+	}
+
+	public void setFormName(String formName) {
+		this.formName = formName;
+	}
+
+	public String getTaskTypeName() {
+		return taskTypeName;
+	}
+
+	public void setTaskTypeName(String taskTypeName) {
+		this.taskTypeName = taskTypeName;
+	}
 	
 	
 
