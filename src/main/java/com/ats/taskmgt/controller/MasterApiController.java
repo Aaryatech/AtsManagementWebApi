@@ -122,7 +122,7 @@ public class MasterApiController {
 		Employee employee = new Employee();
 
 		try {
-			employee = employeeRepository.findByEmpIdAndIsUsed(empId, 0);
+			employee = employeeRepository.findByEmpIdAndIsUsed(empId, 1);
 			employee.setEmpBirthdate(DateConvertor.convertToDMY(employee.getEmpBirthdate()));
 			employee.setEmpJoiningDate(DateConvertor.convertToDMY(employee.getEmpJoiningDate()));
 
@@ -142,7 +142,7 @@ public class MasterApiController {
 
 		try {
 
-			employeeList = employeeRepository.findByIsUsed(0);
+			employeeList = employeeRepository.findByIsUsed(1);
 			for (int i = 0; i < employeeList.size(); i++) {
 				employeeList.get(i).setEmpBirthdate(DateConvertor.convertToDMY(employeeList.get(i).getEmpBirthdate()));
 				employeeList.get(i)
@@ -266,7 +266,7 @@ public class MasterApiController {
 
 		try {
 
-			formTypeList = formTypeRepository.findByIsUsed(0);
+			formTypeList = formTypeRepository.findByIsUsed(1);
 
 		} catch (Exception e) {
 
@@ -286,7 +286,7 @@ public class MasterApiController {
 
 		try {
 
-			taskTypeList = taskTypeRepository.findByIsUsed(0);
+			taskTypeList = taskTypeRepository.findByIsUsed(1);
 
 		} catch (Exception e) {
 
@@ -431,7 +431,7 @@ public class MasterApiController {
 		return loginResponse;
 	}
 
-	@RequestMapping(value = { "/GetModuleProject" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/getModuleProject" }, method = RequestMethod.GET)
 	public @ResponseBody List<GetModuleProject> getModuleProject() {
 
 		List<GetModuleProject> ModuleProjectList = new ArrayList<GetModuleProject>();
