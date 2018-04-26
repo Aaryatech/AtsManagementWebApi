@@ -16,6 +16,7 @@ import com.ats.taskmgt.common.DateConvertor;
 import com.ats.taskmgt.model.Employee;
 import com.ats.taskmgt.model.FormType;
 import com.ats.taskmgt.model.Forms;
+import com.ats.taskmgt.model.GetFormList;
 import com.ats.taskmgt.model.GetModuleProject;
 import com.ats.taskmgt.model.GetProjects;
 import com.ats.taskmgt.model.Info;
@@ -27,6 +28,7 @@ import com.ats.taskmgt.model.TaskType;
 import com.ats.taskmgt.repository.EmployeeRepository;
 import com.ats.taskmgt.repository.FormTypeRepository;
 import com.ats.taskmgt.repository.FormsRepository;
+import com.ats.taskmgt.repository.GetFormListRepository;
 import com.ats.taskmgt.repository.GetModuleProjectRepo;
 import com.ats.taskmgt.repository.GetProjectsRepo;
 import com.ats.taskmgt.repository.ModuleRepository;
@@ -66,6 +68,9 @@ public class MasterApiController {
 
 	@Autowired
 	GetModuleProjectRepo getModuleProjectRepo;
+	
+	@Autowired
+	GetFormListRepository getFormListRepository;
 
 	// ----------------------------------------Employee----------------------------------------------------
 
@@ -447,6 +452,16 @@ public class MasterApiController {
 		}
 		return ModuleProjectList;
 
+	}
+	
+	
+	@RequestMapping(value = { "/getFormListByProjectId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetFormList> getFormListByProjectId(@RequestParam("projectId") int projectId ) {
+
+		List<GetFormList> getFormList = getFormListRepository.getFormListByProjectId(projectId);
+
+		  
+		return getFormList;
 	}
 
 }

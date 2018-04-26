@@ -14,7 +14,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
 	
 	@Transactional
 	@Modifying
-	@Query("UPDATE Employee SET isUsed=1  WHERE emp_id=:empId")
+	@Query("UPDATE Employee SET isUsed=0  WHERE emp_id=:empId")
 	int deleteEmp(@Param("empId")int empId);
 
 	Employee findByEmpIdAndIsUsed(int empId, int delStatus);
