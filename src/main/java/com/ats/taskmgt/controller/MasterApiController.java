@@ -398,6 +398,25 @@ public class MasterApiController {
 
 	}
 	
+	@RequestMapping(value = { "/getTaskById" }, method = RequestMethod.POST)
+	public @ResponseBody Task getTaskById(@RequestParam("taskId") int taskId) {
+		
+		Task task = new Task();
+		
+		try {
+			  
+			task = taskRepository.findByTaskId(taskId);
+				  
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return task;
+
+	}
+	
 	@RequestMapping(value = { "/getSpecialTaskList" }, method = RequestMethod.POST)
 	public @ResponseBody List<Task> getSpecialTaskList(@RequestParam("projectId") int projectId) {
 		List<Task> responseTaskList = new ArrayList<Task>();
