@@ -385,16 +385,26 @@ public class MasterApiController {
 	public @ResponseBody List<Task> saveTask(@RequestBody List<Task> postTaskList) {
 		List<Task> responseTaskList = new ArrayList<Task>();
 		try {
-			 
-			
-			for (int i = 0; i < postTaskList.size(); i++) {
+			  
+				responseTaskList = taskRepository.saveAll(postTaskList);
+				  
 
-				Task tas=null;
+		} catch (Exception e) {
 
-				tas = taskRepository.saveAndFlush(postTaskList.get(i));
-				System.err.println("task responnse " +tas);
-				responseTaskList.add(tas);
-			}
+			e.printStackTrace();
+
+		}
+		return responseTaskList;
+
+	}
+	
+	@RequestMapping(value = { "/getSpecialTaskList" }, method = RequestMethod.POST)
+	public @ResponseBody List<Task> getSpecialTaskList(@RequestParam("projectId") int projectId) {
+		List<Task> responseTaskList = new ArrayList<Task>();
+		try {
+			  
+				responseTaskList = taskRepository.findByProjectIdAndTaskTypeId(projectId,10);
+				  
 
 		} catch (Exception e) {
 
@@ -421,7 +431,7 @@ public class MasterApiController {
 		return taskList;
 
 	}
-
+	 
 	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
 	public @ResponseBody LoginResponse findByEmpNameAndEmpPwd(@RequestParam("empMobile") String empMobile,
 			@RequestParam("empPwd") String empPwd) {
