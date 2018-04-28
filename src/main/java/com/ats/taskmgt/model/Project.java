@@ -1,6 +1,5 @@
 package com.ats.taskmgt.model;
-
-import java.util.Date;
+ 
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,9 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
+  
 @Entity
 @Table(name = "t_projects")
 public class Project {
@@ -37,7 +34,7 @@ public class Project {
 	private int projectAllocatedTo;
 	
 	@Column(name="project_start_date")
-	private Date projectStartDate;
+	private String projectStartDate;
 	
 	@Column(name="dev_per")
 	private String devPer;
@@ -49,7 +46,7 @@ public class Project {
 	private int status;
 	
 	@Column(name="project_end_date")
-	private Date projectEndDate;
+	private String projectEndDate;
 
 	public int getProjectId() {
 		return projectId;
@@ -99,13 +96,13 @@ public class Project {
 	public void setProjectAllocatedTo(int projectAllocatedTo) {
 		this.projectAllocatedTo = projectAllocatedTo;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getProjectStartDate() {
+	 
+	public String getProjectStartDate() {
 		return projectStartDate;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+ 
 
-	public void setProjectStartDate(Date projectStartDate) {
+	public void setProjectStartDate(String projectStartDate) {
 		this.projectStartDate = projectStartDate;
 	}
 
@@ -132,13 +129,12 @@ public class Project {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getProjectEndDate() {
+	 
+	public String getProjectEndDate() {
 		return projectEndDate;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-
-	public void setProjectEndDate(Date projectEndDate) {
+	 
+	public void setProjectEndDate(String projectEndDate) {
 		this.projectEndDate = projectEndDate;
 	}
 
