@@ -51,4 +51,7 @@ public interface GetTaskRepository extends JpaRepository<GetTask, Integer>{
 			"    and t.form_id = :formId" ,nativeQuery=true)
 	List<GetTask> findByFormId(@Param("formId") int formId);
 
+	
+	
+	
 }
