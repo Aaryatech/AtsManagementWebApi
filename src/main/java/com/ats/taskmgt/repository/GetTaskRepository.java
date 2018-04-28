@@ -89,7 +89,5 @@ public interface GetTaskRepository extends JpaRepository<GetTask, Integer>{
 			"    and f.form_id = t.form_id\r\n" + 
 			"    and m.module_id = t.module_id\r\n" + 
 			"    and t.developer_id = :developerId" ,nativeQuery=true)
-	List<GetTask> findByDeveloperId(@Param("developerId")int developerId);
-	
-	
+	List<GetTask> findByDeveloperId(@Param("developerId")int developerId); 
 }
