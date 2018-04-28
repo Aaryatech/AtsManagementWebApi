@@ -502,5 +502,22 @@ public class MasterApiController {
 
 		return getFormList;
 	}
+	
+	@RequestMapping(value = { "/allTaskByDeveloperId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetTask> taskByEmpId(@RequestParam("developerId") int developerId) {
+
+	
+		List<GetTask> taskList = new ArrayList<GetTask>();
+
+		try {
+			taskList = getTaskRepository.findByDeveloperId(developerId);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return taskList;
+
+	}
+
 
 }
