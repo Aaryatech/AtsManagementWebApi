@@ -21,6 +21,7 @@ import com.ats.taskmgt.model.GetModuleProject;
 import com.ats.taskmgt.model.GetPhaseTask;
 import com.ats.taskmgt.model.GetProjects;
 import com.ats.taskmgt.model.GetTask;
+import com.ats.taskmgt.model.GetTaskList;
 import com.ats.taskmgt.model.Info;
 import com.ats.taskmgt.model.LoginResponse;
 import com.ats.taskmgt.model.Module;
@@ -36,6 +37,7 @@ import com.ats.taskmgt.repository.GetFormListRepository;
 import com.ats.taskmgt.repository.GetModuleProjectRepo;
 import com.ats.taskmgt.repository.GetPhaseTaskRepository;
 import com.ats.taskmgt.repository.GetProjectsRepo;
+import com.ats.taskmgt.repository.GetTaskListRepository;
 import com.ats.taskmgt.repository.GetTaskRepository;
 import com.ats.taskmgt.repository.ModuleRepository;
 import com.ats.taskmgt.repository.PhaseTaskRepository;
@@ -91,6 +93,9 @@ public class MasterApiController {
 	
 	@Autowired
 	GetPhaseTaskRepository getPhaseTaskRepository;
+	
+	@Autowired
+	GetTaskListRepository getTaskListRepository;
 
 	// ----------------------------------------Employee----------------------------------------------------
 
@@ -613,6 +618,25 @@ public class MasterApiController {
 
 		}
 		return getPhaseTaskList;
+
+	}
+	
+	@RequestMapping(value = { "/getTaskDetailsByTaskId" }, method = RequestMethod.POST)
+	public @ResponseBody  GetTaskList  getTaskDetailsByTaskId(@RequestParam("taskId") int taskId) {
+
+		GetTaskList  getTaskListList = new GetTaskList();
+
+		try {
+
+			 
+			getTaskListList = getTaskListRepository.findByTaskId(taskId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return getTaskListList;
 
 	}
 
