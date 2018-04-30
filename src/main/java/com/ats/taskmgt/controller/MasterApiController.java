@@ -18,12 +18,14 @@ import com.ats.taskmgt.model.FormType;
 import com.ats.taskmgt.model.Forms;
 import com.ats.taskmgt.model.GetFormList;
 import com.ats.taskmgt.model.GetModuleProject;
+import com.ats.taskmgt.model.GetPhaseTask;
 import com.ats.taskmgt.model.GetProjects;
 import com.ats.taskmgt.model.GetTask;
-import com.ats.taskmgt.model.GetTaskList;
 import com.ats.taskmgt.model.Info;
 import com.ats.taskmgt.model.LoginResponse;
 import com.ats.taskmgt.model.Module;
+import com.ats.taskmgt.model.PhaseTask;
+import com.ats.taskmgt.model.PhaseType;
 import com.ats.taskmgt.model.Project;
 import com.ats.taskmgt.model.Task;
 import com.ats.taskmgt.model.TaskType;
@@ -32,10 +34,12 @@ import com.ats.taskmgt.repository.FormTypeRepository;
 import com.ats.taskmgt.repository.FormsRepository;
 import com.ats.taskmgt.repository.GetFormListRepository;
 import com.ats.taskmgt.repository.GetModuleProjectRepo;
+import com.ats.taskmgt.repository.GetPhaseTaskRepository;
 import com.ats.taskmgt.repository.GetProjectsRepo;
-import com.ats.taskmgt.repository.GetTaskListRepository;
 import com.ats.taskmgt.repository.GetTaskRepository;
 import com.ats.taskmgt.repository.ModuleRepository;
+import com.ats.taskmgt.repository.PhaseTaskRepository;
+import com.ats.taskmgt.repository.PhaseTypeRepository;
 import com.ats.taskmgt.repository.ProjectRepository;
 import com.ats.taskmgt.repository.TaskRepository;
 import com.ats.taskmgt.repository.TaskTypeRepository;
@@ -75,12 +79,18 @@ public class MasterApiController {
 
 	@Autowired
 	GetFormListRepository getFormListRepository;
-
+	
 	@Autowired
 	GetTaskRepository getTaskRepository;
-
+	
 	@Autowired
-	GetTaskListRepository getTaskListRepository;
+	PhaseTypeRepository phaseTypeRepository;
+	
+	@Autowired
+	PhaseTaskRepository phaseTaskRepository;
+	
+	@Autowired
+	GetPhaseTaskRepository getPhaseTaskRepository;
 
 	// ----------------------------------------Employee----------------------------------------------------
 
@@ -390,8 +400,9 @@ public class MasterApiController {
 	public @ResponseBody List<Task> saveTask(@RequestBody List<Task> postTaskList) {
 		List<Task> responseTaskList = new ArrayList<Task>();
 		try {
-
-			responseTaskList = taskRepository.saveAll(postTaskList);
+			  
+				responseTaskList = taskRepository.saveAll(postTaskList);
+				  
 
 		} catch (Exception e) {
 
@@ -401,15 +412,16 @@ public class MasterApiController {
 		return responseTaskList;
 
 	}
-
+	
 	@RequestMapping(value = { "/getTaskById" }, method = RequestMethod.POST)
 	public @ResponseBody Task getTaskById(@RequestParam("taskId") int taskId) {
-
+		
 		Task task = new Task();
-
+		
 		try {
-
+			  
 			task = taskRepository.findByTaskId(taskId);
+				  
 
 		} catch (Exception e) {
 
@@ -419,13 +431,14 @@ public class MasterApiController {
 		return task;
 
 	}
-
+	
 	@RequestMapping(value = { "/getSpecialTaskList" }, method = RequestMethod.POST)
 	public @ResponseBody List<Task> getSpecialTaskList(@RequestParam("projectId") int projectId) {
 		List<Task> responseTaskList = new ArrayList<Task>();
 		try {
-
-			responseTaskList = taskRepository.findByProjectIdAndTaskTypeId(projectId, 10);
+			  
+				responseTaskList = taskRepository.findByProjectIdAndTaskTypeId(projectId,10);
+				  
 
 		} catch (Exception e) {
 
@@ -452,7 +465,7 @@ public class MasterApiController {
 		return taskList;
 
 	}
-
+	 
 	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
 	public @ResponseBody LoginResponse findByEmpNameAndEmpPwd(@RequestParam("empMobile") String empMobile,
 			@RequestParam("empPwd") String empPwd) {
@@ -504,10 +517,11 @@ public class MasterApiController {
 
 		return getFormList;
 	}
-
+	
 	@RequestMapping(value = { "/allTaskByDeveloperId" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetTask> taskByEmpId(@RequestParam("developerId") int developerId) {
 
+	
 		List<GetTask> taskList = new ArrayList<GetTask>();
 
 		try {
@@ -519,19 +533,88 @@ public class MasterApiController {
 		return taskList;
 
 	}
+	
+	@RequestMapping(value = { "/getAllPhaseTypeList" }, method = RequestMethod.GET)
+	public @ResponseBody List<PhaseType> getAllPhaseTypeList() {
 
-	@RequestMapping(value = { "/getTaskDetailsByTaskId" }, method = RequestMethod.POST)
-	public @ResponseBody GetTaskList getTaskDetailsByTaskId(@RequestParam("taskId") int taskId) {
+		List<PhaseType> phaseTypeList = new ArrayList<PhaseType>();
 
-		GetTaskList taskList = new GetTaskList();
 		try {
-			taskList = getTaskListRepository.findByTaskId(taskId);
+
+			phaseTypeList = phaseTypeRepository.getAllPhaseTypeList(1);
 
 		} catch (Exception e) {
+
 			e.printStackTrace();
+
 		}
-		return taskList;
+		return phaseTypeList;
 
 	}
+	
+	@RequestMapping(value = { "/savePhaseTask" }, method = RequestMethod.POST)
+	public @ResponseBody PhaseTask savePhaseTask(@RequestBody PhaseTask phaseTask) {
+
+		PhaseTask  task = new PhaseTask();
+
+		try {
+
+			 
+			task = phaseTaskRepository.save(phaseTask);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return task;
+
+	}
+	
+	@RequestMapping(value = { "/phaseTaskById" }, method = RequestMethod.POST)
+	public @ResponseBody PhaseTask phaseTaskById(@RequestParam("tTaskPhaseId") int tTaskPhaseId) {
+
+		PhaseTask  task = new PhaseTask();
+
+		try {
+
+			 
+			task = phaseTaskRepository.findBytTaskPhaseId(tTaskPhaseId);
+			if(task.getActualStartDate()!="" && task.getActualStartDate()!=null)
+				task.setActualStartDate(DateConvertor.convertToDMY(task.getActualStartDate()));
+			if(task.getAtcualEndDate()!="" && task.getAtcualEndDate()!=null)
+				task.setAtcualEndDate(DateConvertor.convertToDMY(task.getAtcualEndDate()));
+			
+			task.setExpEndDate(DateConvertor.convertToDMY(task.getExpEndDate())); 
+			task.setExpStartDate(DateConvertor.convertToDMY(task.getExpStartDate()));
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return task;
+
+	}
+	
+	@RequestMapping(value = { "/getPhaseTaskListByProjectId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetPhaseTask> getPhaseTaskListByProjectId(@RequestParam("projectId") int projectId) {
+
+		List<GetPhaseTask>  getPhaseTaskList = new ArrayList<GetPhaseTask>();
+
+		try {
+
+			 
+			getPhaseTaskList = getPhaseTaskRepository.getPhaseTaskListByProjectId(projectId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return getPhaseTaskList;
+
+	}
+
 
 }
