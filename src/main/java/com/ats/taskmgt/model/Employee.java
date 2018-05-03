@@ -1,5 +1,5 @@
 package com.ats.taskmgt.model;
- 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,45 +12,48 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name = "m_employee")
 public class Employee {
-	 
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="emp_id")
+	@Column(name = "emp_id")
 	private int empId;
-	
-	@Column(name="emp_name")
+
+	@Column(name = "emp_name")
 	private String empName;
-	
-	@Column(name="emp_mobile")
+
+	@Column(name = "emp_mobile")
 	private String empMobile;
-	
-	@Column(name="emp_edu")
+
+	@Column(name = "emp_edu")
 	private String empEdu;
-	
-	@Column(name="emp_birthdate")
+
+	@Column(name = "emp_birthdate")
 	private String empBirthdate;
-	
-	@Column(name="emp_designation")
+
+	@Column(name = "emp_designation")
 	private String empDesignation;
-	
-	@Column(name="emp_pwd")
+
+	@Column(name = "emp_pwd")
 	private String empPwd;
-	
-	@Column(name="emp_prev_exp")
+
+	@Column(name = "emp_prev_exp")
 	private String empPrevExp;
-	
-	@Column(name="emp_joining_date")
+
+	@Column(name = "emp_joining_date")
 	private String empJoiningDate;
-	
-	@Column(name="is_used")
+
+	@Column(name = "is_used")
 	private int isUsed;
-	
-	@Column(name="emp_per_hr_rate")
+
+	@Column(name = "emp_per_hr_rate")
 	private float empPerHrRate;
 
-	@Column(name="emp_type")
+	@Column(name = "emp_type")
 	private int empType;
-	
+
+	@Column(name = "total_leaves")
+	private int totalLeaves;
+
 	public int getEmpId() {
 		return empId;
 	}
@@ -82,7 +85,7 @@ public class Employee {
 	public void setEmpEdu(String empEdu) {
 		this.empEdu = empEdu;
 	}
-	 
+
 	public String getEmpBirthdate() {
 		return empBirthdate;
 	}
@@ -114,7 +117,7 @@ public class Employee {
 	public void setEmpPrevExp(String empPrevExp) {
 		this.empPrevExp = empPrevExp;
 	}
-	 
+
 	public String getEmpJoiningDate() {
 		return empJoiningDate;
 	}
@@ -147,15 +150,21 @@ public class Employee {
 		this.empType = empType;
 	}
 
+	public int getTotalLeaves() {
+		return totalLeaves;
+	}
+
+	public void setTotalLeaves(int totalLeaves) {
+		this.totalLeaves = totalLeaves;
+	}
+
 	@Override
 	public String toString() {
 		return "Employee [empId=" + empId + ", empName=" + empName + ", empMobile=" + empMobile + ", empEdu=" + empEdu
 				+ ", empBirthdate=" + empBirthdate + ", empDesignation=" + empDesignation + ", empPwd=" + empPwd
 				+ ", empPrevExp=" + empPrevExp + ", empJoiningDate=" + empJoiningDate + ", isUsed=" + isUsed
-				+ ", empPerHrRate=" + empPerHrRate + ", empType=" + empType + "]";
+				+ ", empPerHrRate=" + empPerHrRate + ", empType=" + empType + ", totalLeaves=" + totalLeaves + "]";
 	}
-	
-	
-	
+
 
 }
