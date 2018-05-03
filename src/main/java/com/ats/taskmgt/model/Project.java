@@ -45,6 +45,9 @@ public class Project {
 	@Column(name="status")
 	private int status;
 	
+	@Column(name="project_exp_end_date")
+	private String projectExpEndDate;
+	
 	@Column(name="project_end_date")
 	private String projectEndDate;
 
@@ -138,12 +141,21 @@ public class Project {
 		this.projectEndDate = projectEndDate;
 	}
 
+	public String getProjectExpEndDate() {
+		return projectExpEndDate;
+	}
+
+	public void setProjectExpEndDate(String projectExpEndDate) {
+		this.projectExpEndDate = projectExpEndDate;
+	}
+
 	@Override
 	public String toString() {
 		return "Project [projectId=" + projectId + ", projectName=" + projectName + ", projectDescription="
 				+ projectDescription + ", referenceBy=" + referenceBy + ", projectCost=" + projectCost
 				+ ", projectAllocatedTo=" + projectAllocatedTo + ", projectStartDate=" + projectStartDate + ", devPer="
-				+ devPer + ", compPer=" + compPer + ", status=" + status + ", projectEndDate=" + projectEndDate + "]";
+				+ devPer + ", compPer=" + compPer + ", status=" + status + ", projectExpEndDate=" + projectExpEndDate
+				+ ", projectEndDate=" + projectEndDate + "]";
 	}
 	
 	

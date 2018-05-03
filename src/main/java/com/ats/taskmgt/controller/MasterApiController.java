@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.taskmgt.common.DateConvertor;
+import com.ats.taskmgt.model.DevloperListFromTask; 
 import com.ats.taskmgt.model.Employee;
 import com.ats.taskmgt.model.FormType;
 import com.ats.taskmgt.model.Forms;
@@ -30,6 +31,7 @@ import com.ats.taskmgt.model.PhaseType;
 import com.ats.taskmgt.model.Project;
 import com.ats.taskmgt.model.Task;
 import com.ats.taskmgt.model.TaskType;
+import com.ats.taskmgt.repository.DevloperListFromTaskRepo;
 import com.ats.taskmgt.repository.EmployeeRepository;
 import com.ats.taskmgt.repository.FormTypeRepository;
 import com.ats.taskmgt.repository.FormsRepository;
@@ -96,6 +98,9 @@ public class MasterApiController {
 	
 	@Autowired
 	GetTaskListRepository getTaskListRepository;
+	
+	@Autowired
+	DevloperListFromTaskRepo devloperListFromTaskRepo;
 
 	// ----------------------------------------Employee----------------------------------------------------
 
@@ -637,6 +642,31 @@ public class MasterApiController {
 
 		}
 		return getTaskListList;
+
+	}
+	
+	
+	@RequestMapping(value = { "/ongoingProjectList" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetProjects> ongoingProjectList() {
+
+		List<GetProjects> projectList = new ArrayList<GetProjects>();
+
+		try {
+
+			projectList = getProjectsRepo.ongoingProjectList();
+			
+			for(int i=0 ; i<projectList.size() ; i++)
+			{
+				List<DevloperListFromTask> devloperListFromTask = devloperListFromTaskRepo.devloperListFromTask(projectList.get(i).getProjectId());
+				projectList.get(i).setDevloperListFromTask(devloperListFromTask);
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return projectList;
 
 	}
 

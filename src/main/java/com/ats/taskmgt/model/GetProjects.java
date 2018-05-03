@@ -1,13 +1,15 @@
 package com.ats.taskmgt.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.Transient;
+ 
 import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 public class GetProjects {
@@ -49,6 +51,9 @@ public class GetProjects {
 		private Date projectEndDate;
 		
 		private String empName;
+		
+		@Transient
+		List<DevloperListFromTask> devloperListFromTask;
 
 		public int getProjectId() {
 			return projectId;
@@ -150,13 +155,22 @@ public class GetProjects {
 			this.empName = empName;
 		}
 
+	 
+		public List<DevloperListFromTask> getDevloperListFromTask() {
+			return devloperListFromTask;
+		}
+
+		public void setDevloperListFromTask(List<DevloperListFromTask> devloperListFromTask) {
+			this.devloperListFromTask = devloperListFromTask;
+		}
+
 		@Override
 		public String toString() {
 			return "GetProjects [projectId=" + projectId + ", projectName=" + projectName + ", projectDescription="
 					+ projectDescription + ", referenceBy=" + referenceBy + ", projectCost=" + projectCost
 					+ ", projectAllocatedTo=" + projectAllocatedTo + ", projectStartDate=" + projectStartDate
 					+ ", devPer=" + devPer + ", compPer=" + compPer + ", status=" + status + ", projectEndDate="
-					+ projectEndDate + ", empName=" + empName + "]";
+					+ projectEndDate + ", empName=" + empName + ", devloperListFromTask=" + devloperListFromTask + "]";
 		}
 		
 		
