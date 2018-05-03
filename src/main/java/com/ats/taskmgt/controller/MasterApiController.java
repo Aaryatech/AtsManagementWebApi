@@ -657,7 +657,9 @@ public class MasterApiController {
 			
 			for(int i=0 ; i<projectList.size() ; i++)
 			{
-				List<DevloperListFromTask> devloperListFromTask = devloperListFromTaskRepo.devloperListFromTask(projectList.get(i).getProjectId());
+				System.err.println("projct id " + projectList.get(i).getProjectId());
+				List<DevloperListFromTask> devloperListFromTask = devloperListFromTaskRepo.devloperListFromTask(projectList.get(i).getProjectId()); 
+				System.err.println("List " + devloperListFromTask);
 				projectList.get(i).setDevloperListFromTask(devloperListFromTask);
 			}
 

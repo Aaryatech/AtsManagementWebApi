@@ -50,6 +50,9 @@ public class GetProjects {
 		@Column(name="project_end_date")
 		private Date projectEndDate;
 		
+		@Column(name="project_exp_end_date")
+		private Date projectExpEndDate;
+		
 		private String empName;
 		
 		@Transient
@@ -163,6 +166,14 @@ public class GetProjects {
 		public void setDevloperListFromTask(List<DevloperListFromTask> devloperListFromTask) {
 			this.devloperListFromTask = devloperListFromTask;
 		}
+		@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+		public Date getProjectExpEndDate() {
+			return projectExpEndDate;
+		}
+
+		public void setProjectExpEndDate(Date projectExpEndDate) {
+			this.projectExpEndDate = projectExpEndDate;
+		}
 
 		@Override
 		public String toString() {
@@ -170,7 +181,8 @@ public class GetProjects {
 					+ projectDescription + ", referenceBy=" + referenceBy + ", projectCost=" + projectCost
 					+ ", projectAllocatedTo=" + projectAllocatedTo + ", projectStartDate=" + projectStartDate
 					+ ", devPer=" + devPer + ", compPer=" + compPer + ", status=" + status + ", projectEndDate="
-					+ projectEndDate + ", empName=" + empName + ", devloperListFromTask=" + devloperListFromTask + "]";
+					+ projectEndDate + ", projectExpEndDate=" + projectExpEndDate + ", empName=" + empName
+					+ ", devloperListFromTask=" + devloperListFromTask + "]";
 		}
 		
 		
