@@ -1,6 +1,7 @@
 package com.ats.taskmgt.controller;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,7 +127,8 @@ public class ReportTestController {
 	@RequestMapping(value = "/getDevelopmentHrsByProwise", method = RequestMethod.POST)
 	public @ResponseBody List<DevelopmentHrsProwise> getDevelopmentHrsByProwise(
 			@RequestParam("projectId") int projectId) {
-		List<DevelopmentHrsProwise> developmentHrsProwiseList = null;
+		List<DevelopmentHrsProwise> developmentHrsProwiseList = new ArrayList<DevelopmentHrsProwise>();
+
 		try {
 
 			developmentHrsProwiseList = developmentHrsProwiseRepo.findDevHrs(projectId);
@@ -136,7 +138,8 @@ public class ReportTestController {
 
 		}
 
-		System.err.println("output  " + developmentHrsProwiseList.toString());
+		System.err.println("output  " + developmentHrsProwiseList);
+
 		return developmentHrsProwiseList;
 
 	}
@@ -145,21 +148,26 @@ public class ReportTestController {
 	// -------------------- Project Phase Tracking--------
 
 	@RequestMapping(value = "/getProjectPhaseTracking", method = RequestMethod.POST)
-	public @ResponseBody ProjectPhaseTracking getProjectPhaseTracking(@RequestParam("projectId") int projectId,
+	public @ResponseBody List<ProjectPhaseTracking> getProjectPhaseTracking(@RequestParam("projectId") int projectId,
 			@RequestParam("phaseId") int phaseId) {
-		ProjectPhaseTracking projectPhaseTracking = new ProjectPhaseTracking();
+		List<ProjectPhaseTracking> projectPhaseTrackingList;
+
 		try {
 
-			projectPhaseTracking = projectPhaseTrackingRepository.findProPhase(projectId, phaseId);
+			if (phaseId != 0) {
+				projectPhaseTrackingList = projectPhaseTrackingRepository.findProPhase(projectId, phaseId);
+			}
+
+			else {
+				projectPhaseTrackingList = projectPhaseTrackingRepository.findAllProPhase(projectId);
+
+			}
 		} catch (Exception e) {
-			System.err.println("Emp performance exce " + e.getMessage());
+			projectPhaseTrackingList = new ArrayList<>();
 			e.printStackTrace();
 
 		}
-
-		System.err.println("output  " + projectPhaseTracking.toString());
-		return projectPhaseTracking;
-
+		return projectPhaseTrackingList;
 	}
 
 }
