@@ -45,21 +45,19 @@ public class ReportTestController {
 
 	@RequestMapping(value = "/getDatewiseEmpCon", method = RequestMethod.POST)
 	public @ResponseBody EmpConReport getDatewiseEmpCon(@RequestParam("fromDate") String fromDate,
-			@RequestParam("toDate") String toDate, @RequestParam("empId") int empId,@RequestParam("projectId") int projectId) {
+			@RequestParam("toDate") String toDate, @RequestParam("empId") int empId,
+			@RequestParam("projectId") int projectId) {
 
 		EmpConReport empConReport = new EmpConReport();
 		try {
-			
-			if(projectId==0)
-			{
+
+			if (projectId == 0) {
 				empConReport = employeeConsumptionRepository.findDateWiseEmpConsumption(fromDate, toDate, empId);
 				empConReport.setProjectName("All Project");
-			}
-			else
-			{
+			} else {
 				empConReport = employeeConsumptionRepository.findDateWiseEmpConsumption(projectId, empId);
 			}
-			
+
 		} catch (Exception e) {
 
 			e.printStackTrace();
