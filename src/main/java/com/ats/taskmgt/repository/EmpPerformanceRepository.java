@@ -1,5 +1,7 @@
 package com.ats.taskmgt.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,5 +16,5 @@ public interface EmpPerformanceRepository extends JpaRepository<EmpPerformance, 
 			+ " coalesce(t.actual_req_hrs,0) as actual_req_hrs , t.remarks_by_dev  from t_task t,  t_modules m"
 			+ "  where  t.developer_id =:empId and t.project_id =:projectId AND m.module_id=t.module_id   "
 			, nativeQuery = true)
-	EmpPerformance findEmpPerformance(@Param("projectId") int projectId,@Param("empId") int empId );
+	List<EmpPerformance> findEmpPerformance(@Param("projectId") int projectId,@Param("empId") int empId );
 }

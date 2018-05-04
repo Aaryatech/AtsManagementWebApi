@@ -26,4 +26,9 @@ public interface EmpAllocatedWorkRepo extends JpaRepository<EmpAllocatedWorkRepo
 			+ "", nativeQuery = true)
 	EmpAllocatedWorkReport findAllocatedEmpWorkById(@Param("projectId") int projectId, @Param("empId") int empId);
 
+	@Query(value= "SELECT t_task.task_id,t_projects.project_name,COALESCE(SUM(task_planned_hrs), 0) as task_planned_hrs,"
+			+ "COALESCE(SUM(task_planned_hrs)/8,  0) as no_of_days  FROM     t_projects,   t_task  WHERE  t_task.developer_id=:empId     and t_task.project_id = t_projects.project_id    AND t_task.dev_status!=3  "
+			+ "", nativeQuery = true)
+	EmpAllocatedWorkReport findAllocatedEmpWorkById(@Param("empId") int empId);
+
 }

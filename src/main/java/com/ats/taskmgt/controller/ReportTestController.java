@@ -97,7 +97,15 @@ public class ReportTestController {
 		EmpAllocatedWorkReport empAllocatedWorkReport = new EmpAllocatedWorkReport();
 
 		try {
-			empAllocatedWorkReport = empAllocatedWorkRepo.findAllocatedEmpWorkById(projectId, empId);
+			if(projectId==0)
+			{
+				empAllocatedWorkReport = empAllocatedWorkRepo.findAllocatedEmpWorkById(empId);
+				empAllocatedWorkReport.setProjectName("All Projects");
+			}
+			else 
+			{
+				empAllocatedWorkReport = empAllocatedWorkRepo.findAllocatedEmpWorkById(projectId, empId);
+			}
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -111,9 +119,9 @@ public class ReportTestController {
 	// ----------------------- Employee Performance--------
 
 	@RequestMapping(value = "/getEmployeePerformance", method = RequestMethod.POST)
-	public @ResponseBody EmpPerformance getEmployeePerformance(@RequestParam("projectId") int projectId,
+	public @ResponseBody List<EmpPerformance> getEmployeePerformance(@RequestParam("projectId") int projectId,
 			@RequestParam("empId") int empId) {
-		EmpPerformance empPerformance = new EmpPerformance();
+		List<EmpPerformance> empPerformance = new ArrayList<EmpPerformance>();
 		try {
 
 			empPerformance = empPerformanceRepository.findEmpPerformance(projectId, empId);
