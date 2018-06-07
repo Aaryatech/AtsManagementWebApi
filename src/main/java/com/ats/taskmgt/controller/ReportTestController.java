@@ -55,11 +55,14 @@ public class ReportTestController {
 				empConReport = employeeConsumptionRepository.findDateWiseEmpConsumption(fromDate, toDate, empId);
 				empConReport.setProjectName("All Project");
 			} else {
+				
+				System.err.println("inside else");
 				empConReport = employeeConsumptionRepository.findDateWiseEmpConsumption(projectId, empId);
 			}
+			System.out.println(empConReport);
 
 		} catch (Exception e) {
-
+System.err.println("ex occ " +e.getMessage());
 			e.printStackTrace();
 
 		}
