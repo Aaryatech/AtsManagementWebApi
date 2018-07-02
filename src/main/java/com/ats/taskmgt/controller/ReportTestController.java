@@ -15,18 +15,25 @@ import com.ats.taskmgt.model.DevelopmentHrsProwise;
 import com.ats.taskmgt.model.EmpAllocatedWorkReport;
 import com.ats.taskmgt.model.EmpConReport;
 import com.ats.taskmgt.model.EmpPerformance;
+import com.ats.taskmgt.model.ProjectHours;
 import com.ats.taskmgt.model.ProjectPhaseTracking;
+import com.ats.taskmgt.model.RemainingTaskGraph;
 import com.ats.taskmgt.repository.DevelopmentHrsProwiseRepo;
 import com.ats.taskmgt.repository.EmpAllocatedWorkRepo;
 import com.ats.taskmgt.repository.EmpPerformanceRepository;
 import com.ats.taskmgt.repository.EmployeeConsumptionRepository;
+import com.ats.taskmgt.repository.ProjectHoursRepo;
 import com.ats.taskmgt.repository.ProjectPhaseTrackingRepository;
+import com.ats.taskmgt.repository.RemainingTaskGraphRepo;
 
 @RestController
 public class ReportTestController {
 
 	@Autowired
 	EmployeeConsumptionRepository employeeConsumptionRepository;
+
+	@Autowired
+	ProjectHoursRepo projectHoursRepo;
 
 	@Autowired
 	EmpAllocatedWorkRepo empAllocatedWorkRepo;
@@ -39,6 +46,9 @@ public class ReportTestController {
 
 	@Autowired
 	ProjectPhaseTrackingRepository projectPhaseTrackingRepository;
+
+	@Autowired
+	RemainingTaskGraphRepo remainingTaskGraphRepo;
 
 	// -------------------------------------------------------------------------
 	// ----------------------- Employee Consumption Report---------
@@ -55,14 +65,14 @@ public class ReportTestController {
 				empConReport = employeeConsumptionRepository.findDateWiseEmpConsumption(fromDate, toDate, empId);
 				empConReport.setProjectName("All Project");
 			} else {
-				
+
 				System.err.println("inside else");
 				empConReport = employeeConsumptionRepository.findDateWiseEmpConsumption(projectId, empId);
 			}
 			System.out.println(empConReport);
 
 		} catch (Exception e) {
-System.err.println("ex occ " +e.getMessage());
+			System.err.println("ex occ " + e.getMessage());
 			e.printStackTrace();
 
 		}
@@ -100,13 +110,10 @@ System.err.println("ex occ " +e.getMessage());
 		EmpAllocatedWorkReport empAllocatedWorkReport = new EmpAllocatedWorkReport();
 
 		try {
-			if(projectId==0)
-			{
+			if (projectId == 0) {
 				empAllocatedWorkReport = empAllocatedWorkRepo.findAllocatedEmpWorkById(empId);
 				empAllocatedWorkReport.setProjectName("All Projects");
-			}
-			else 
-			{
+			} else {
 				empAllocatedWorkReport = empAllocatedWorkRepo.findAllocatedEmpWorkById(projectId, empId);
 			}
 		} catch (Exception e) {
@@ -186,6 +193,44 @@ System.err.println("ex occ " +e.getMessage());
 
 		}
 		return projectPhaseTrackingList;
+	}
+
+	// ----------------------- Employee Remaining Hours Graph--------
+
+	@RequestMapping(value = "/getEmpRemainingHours", method = RequestMethod.GET)
+	public @ResponseBody List<RemainingTaskGraph> getEmpRemainingHours() {
+
+		List<RemainingTaskGraph> remainingTaskGraphList = new ArrayList<>();
+		try {
+
+			remainingTaskGraphList = remainingTaskGraphRepo.getEmpRemainingHours();
+
+		} catch (Exception e) {
+			System.err.println("ex occ " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return remainingTaskGraphList;
+
+	}
+
+	// ----------------------- Project Hours Graph--------
+
+	@RequestMapping(value = "/getProjectHours", method = RequestMethod.GET)
+	public @ResponseBody List<ProjectHours> getProjectHours() {
+
+		List<ProjectHours> projectHoursGraphList = new ArrayList<>();
+		try {
+
+			projectHoursGraphList = projectHoursRepo.getProjectHours();
+
+		} catch (Exception e) {
+			System.err.println("ex occ " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return projectHoursGraphList;
+
 	}
 
 }
