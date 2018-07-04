@@ -21,6 +21,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
 
 	List<Employee> findByIsUsed(int delStatus);
 
-	Employee findByEmpMobileAndEmpPwd(String empMobile, String empPwd);
+	Employee findByEmpMobileAndEmpPwdAndIsUsed(String empMobile, String empPwd, int isUsed);
 
 }

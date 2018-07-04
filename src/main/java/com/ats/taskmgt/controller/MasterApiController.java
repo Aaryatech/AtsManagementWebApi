@@ -21,6 +21,7 @@ import com.ats.taskmgt.model.GetFormList;
 import com.ats.taskmgt.model.GetModuleProject;
 import com.ats.taskmgt.model.GetPhaseTask;
 import com.ats.taskmgt.model.GetProjects;
+import com.ats.taskmgt.model.GetSupportTask;
 import com.ats.taskmgt.model.GetTask;
 import com.ats.taskmgt.model.GetTaskList;
 import com.ats.taskmgt.model.Info;
@@ -29,6 +30,7 @@ import com.ats.taskmgt.model.Module;
 import com.ats.taskmgt.model.PhaseTask;
 import com.ats.taskmgt.model.PhaseType;
 import com.ats.taskmgt.model.Project;
+import com.ats.taskmgt.model.SupportTask;
 import com.ats.taskmgt.model.Task;
 import com.ats.taskmgt.model.TaskType;
 import com.ats.taskmgt.repository.DevloperListFromTaskRepo;
@@ -39,12 +41,14 @@ import com.ats.taskmgt.repository.GetFormListRepository;
 import com.ats.taskmgt.repository.GetModuleProjectRepo;
 import com.ats.taskmgt.repository.GetPhaseTaskRepository;
 import com.ats.taskmgt.repository.GetProjectsRepo;
+import com.ats.taskmgt.repository.GetSupportTaskRepository;
 import com.ats.taskmgt.repository.GetTaskListRepository;
 import com.ats.taskmgt.repository.GetTaskRepository;
 import com.ats.taskmgt.repository.ModuleRepository;
 import com.ats.taskmgt.repository.PhaseTaskRepository;
 import com.ats.taskmgt.repository.PhaseTypeRepository;
 import com.ats.taskmgt.repository.ProjectRepository;
+import com.ats.taskmgt.repository.SupportTaskRepository;
 import com.ats.taskmgt.repository.TaskRepository;
 import com.ats.taskmgt.repository.TaskTypeRepository;
 
@@ -101,6 +105,12 @@ public class MasterApiController {
 	
 	@Autowired
 	DevloperListFromTaskRepo devloperListFromTaskRepo;
+	
+	@Autowired
+	SupportTaskRepository supportTaskRepository;
+	
+	@Autowired
+	GetSupportTaskRepository getSupportTaskRepository;
 
 	// ----------------------------------------Employee----------------------------------------------------
 
@@ -480,7 +490,7 @@ public class MasterApiController {
 	public @ResponseBody LoginResponse findByEmpNameAndEmpPwd(@RequestParam("empMobile") String empMobile,
 			@RequestParam("empPwd") String empPwd) {
 
-		Employee employee = employeeRepository.findByEmpMobileAndEmpPwd(empMobile, empPwd);
+		Employee employee = employeeRepository.findByEmpMobileAndEmpPwdAndIsUsed(empMobile, empPwd,1);
 
 		LoginResponse loginResponse = new LoginResponse();
 
@@ -669,6 +679,63 @@ public class MasterApiController {
 
 		}
 		return projectList;
+
+	}
+	
+	@RequestMapping(value = { "/saveSupportTask" }, method = RequestMethod.POST)
+	public @ResponseBody SupportTask saveSupportTask(@RequestBody SupportTask supportTask) {
+
+		SupportTask  task = new SupportTask();
+
+		try {
+
+			 
+			task = supportTaskRepository.save(supportTask);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return task;
+
+	}
+	
+	@RequestMapping(value = { "/getSupportTaskBySuppId" }, method = RequestMethod.POST)
+	public @ResponseBody  GetSupportTask  getSupportTaskBySuppId(@RequestParam("suppId") int suppId) {
+
+		GetSupportTask  getSupportTaskBySuppId = new GetSupportTask();
+
+		try {
+
+			 
+			getSupportTaskBySuppId = getSupportTaskRepository.getSupportTaskBySuppId(suppId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return getSupportTaskBySuppId;
+
+	}
+	
+	@RequestMapping(value = { "/getSupportTaskByEmpiId" }, method = RequestMethod.POST)
+	public @ResponseBody  List<GetSupportTask>  getSupportTaskByEmpiId(@RequestParam("empId") int empId) {
+
+		List<GetSupportTask>  getSupportTaskByEmpiId = new ArrayList<GetSupportTask>();
+
+		try {
+
+			 
+			getSupportTaskByEmpiId = getSupportTaskRepository.getSupportTaskByEmpiId(empId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return getSupportTaskByEmpiId;
 
 	}
 
