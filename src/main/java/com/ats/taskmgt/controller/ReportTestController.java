@@ -18,6 +18,7 @@ import com.ats.taskmgt.model.EmpPerformance;
 import com.ats.taskmgt.model.ProjectHours;
 import com.ats.taskmgt.model.ProjectPhaseTracking;
 import com.ats.taskmgt.model.RemainingTaskGraph;
+import com.ats.taskmgt.model.SupportTaskReport;
 import com.ats.taskmgt.repository.DevelopmentHrsProwiseRepo;
 import com.ats.taskmgt.repository.EmpAllocatedWorkRepo;
 import com.ats.taskmgt.repository.EmpPerformanceRepository;
@@ -25,12 +26,16 @@ import com.ats.taskmgt.repository.EmployeeConsumptionRepository;
 import com.ats.taskmgt.repository.ProjectHoursRepo;
 import com.ats.taskmgt.repository.ProjectPhaseTrackingRepository;
 import com.ats.taskmgt.repository.RemainingTaskGraphRepo;
+import com.ats.taskmgt.repository.SupportTaskReportrepo;
 
 @RestController
 public class ReportTestController {
 
 	@Autowired
 	EmployeeConsumptionRepository employeeConsumptionRepository;
+
+	@Autowired
+	SupportTaskReportrepo supportTaskReportrepo;
 
 	@Autowired
 	ProjectHoursRepo projectHoursRepo;
@@ -230,6 +235,41 @@ public class ReportTestController {
 
 		}
 		return projectHoursGraphList;
+
+	}
+
+	@RequestMapping(value = "/getSupportTaskReport", method = RequestMethod.POST)
+	public @ResponseBody List<SupportTaskReport> getSupportTaskReport(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate, @RequestParam("empId") int empId,
+			@RequestParam("projectId") int projectId) {
+
+		List<SupportTaskReport> supportTaskReportList = new ArrayList<>();
+		try {
+
+			if (projectId == 0 && empId != 0) {
+				supportTaskReportList = supportTaskReportrepo.getSupportTaskByEmpId(fromDate, toDate, empId);
+
+			} else if (empId == 0 && projectId != 0) {
+				supportTaskReportList = supportTaskReportrepo.getSupportTaskByProjectId(fromDate, toDate, projectId);
+
+			} else if (empId != 0 && projectId != 0) {
+
+				supportTaskReportList = supportTaskReportrepo.getSupportTaskByEmpIdAndProId(fromDate, toDate, empId,
+						projectId);
+
+			} else {
+				supportTaskReportList = supportTaskReportrepo.getSupportTask(fromDate, toDate);
+
+			}
+
+			System.out.println(supportTaskReportList);
+
+		} catch (Exception e) {
+			System.err.println("ex occ " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return supportTaskReportList;
 
 	}
 

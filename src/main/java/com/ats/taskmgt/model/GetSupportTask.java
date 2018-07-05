@@ -1,7 +1,5 @@
 package com.ats.taskmgt.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,40 +10,40 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class GetSupportTask {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="supp_id")
+	@Column(name = "supp_id")
 	private int suppId;
-	
-	@Column(name="project_id")
+
+	@Column(name = "project_id")
 	private int projectId;
-	
-	@Column(name="emp_id")
+
+	@Column(name = "emp_id")
 	private int empId;
-	
-	@Column(name="module_name")
+
+	@Column(name = "module_name")
 	private String moduleName;
-	
-	@Column(name="work_date")
-	private Date workDate;
-	
-	@Column(name="date")
-	private Date date;
-	
-	@Column(name="description")
+
+	@Column(name = "work_date")
+	private String workDate;
+
+	@Column(name = "date")
+	private String date;
+
+	@Column(name = "description")
 	private String description;
-	
-	@Column(name="required_hrs")
+
+	@Column(name = "required_hrs")
 	private String requiredHrs;
-	
-	@Column(name="take_away")
+
+	@Column(name = "take_away")
 	private String takeAway;
-	
-	@Column(name="emp_name")
+
+	@Column(name = "emp_name")
 	private String empName;
-	
-	@Column(name="project_name")
+
+	@Column(name = "project_name")
 	private String projectName;
 
 	public int getSuppId() {
@@ -79,20 +77,22 @@ public class GetSupportTask {
 	public void setModuleName(String moduleName) {
 		this.moduleName = moduleName;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getWorkDate() {
+
+	@JsonFormat(locale = "hi", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public String getWorkDate() {
 		return workDate;
 	}
 
-	public void setWorkDate(Date workDate) {
+	public void setWorkDate(String workDate) {
 		this.workDate = workDate;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getDate() {
+
+	@JsonFormat(locale = "hi", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
@@ -143,7 +143,5 @@ public class GetSupportTask {
 				+ ", requiredHrs=" + requiredHrs + ", takeAway=" + takeAway + ", empName=" + empName + ", projectName="
 				+ projectName + "]";
 	}
-	
-	
 
 }

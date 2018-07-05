@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.taskmgt.common.DateConvertor;
-import com.ats.taskmgt.model.DevloperListFromTask; 
+import com.ats.taskmgt.model.DevloperListFromTask;
 import com.ats.taskmgt.model.Employee;
 import com.ats.taskmgt.model.FormType;
 import com.ats.taskmgt.model.Forms;
@@ -52,8 +52,6 @@ import com.ats.taskmgt.repository.SupportTaskRepository;
 import com.ats.taskmgt.repository.TaskRepository;
 import com.ats.taskmgt.repository.TaskTypeRepository;
 
-import ch.qos.logback.classic.pattern.DateConverter;;
-
 @RestController
 @RequestMapping("/masters")
 public class MasterApiController {
@@ -87,28 +85,28 @@ public class MasterApiController {
 
 	@Autowired
 	GetFormListRepository getFormListRepository;
-	
+
 	@Autowired
 	GetTaskRepository getTaskRepository;
-	
+
 	@Autowired
 	PhaseTypeRepository phaseTypeRepository;
-	
+
 	@Autowired
 	PhaseTaskRepository phaseTaskRepository;
-	
+
 	@Autowired
 	GetPhaseTaskRepository getPhaseTaskRepository;
-	
+
 	@Autowired
 	GetTaskListRepository getTaskListRepository;
-	
+
 	@Autowired
 	DevloperListFromTaskRepo devloperListFromTaskRepo;
-	
+
 	@Autowired
 	SupportTaskRepository supportTaskRepository;
-	
+
 	@Autowired
 	GetSupportTaskRepository getSupportTaskRepository;
 
@@ -420,9 +418,8 @@ public class MasterApiController {
 	public @ResponseBody List<Task> saveTask(@RequestBody List<Task> postTaskList) {
 		List<Task> responseTaskList = new ArrayList<Task>();
 		try {
-			  
-				responseTaskList = taskRepository.saveAll(postTaskList);
-				  
+
+			responseTaskList = taskRepository.saveAll(postTaskList);
 
 		} catch (Exception e) {
 
@@ -432,16 +429,15 @@ public class MasterApiController {
 		return responseTaskList;
 
 	}
-	
+
 	@RequestMapping(value = { "/getTaskById" }, method = RequestMethod.POST)
 	public @ResponseBody Task getTaskById(@RequestParam("taskId") int taskId) {
-		
+
 		Task task = new Task();
-		
+
 		try {
-			  
+
 			task = taskRepository.findByTaskId(taskId);
-				  
 
 		} catch (Exception e) {
 
@@ -451,14 +447,13 @@ public class MasterApiController {
 		return task;
 
 	}
-	
+
 	@RequestMapping(value = { "/getSpecialTaskList" }, method = RequestMethod.POST)
 	public @ResponseBody List<Task> getSpecialTaskList(@RequestParam("projectId") int projectId) {
 		List<Task> responseTaskList = new ArrayList<Task>();
 		try {
-			  
-				responseTaskList = taskRepository.findByProjectIdAndTaskTypeId(projectId,10);
-				  
+
+			responseTaskList = taskRepository.findByProjectIdAndTaskTypeId(projectId, 10);
 
 		} catch (Exception e) {
 
@@ -485,12 +480,12 @@ public class MasterApiController {
 		return taskList;
 
 	}
-	 
+
 	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
 	public @ResponseBody LoginResponse findByEmpNameAndEmpPwd(@RequestParam("empMobile") String empMobile,
 			@RequestParam("empPwd") String empPwd) {
 
-		Employee employee = employeeRepository.findByEmpMobileAndEmpPwdAndIsUsed(empMobile, empPwd,1);
+		Employee employee = employeeRepository.findByEmpMobileAndEmpPwdAndIsUsed(empMobile, empPwd, 1);
 
 		LoginResponse loginResponse = new LoginResponse();
 
@@ -537,11 +532,10 @@ public class MasterApiController {
 
 		return getFormList;
 	}
-	
+
 	@RequestMapping(value = { "/allTaskByDeveloperId" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetTask> taskByEmpId(@RequestParam("developerId") int developerId) {
 
-	
 		List<GetTask> taskList = new ArrayList<GetTask>();
 
 		try {
@@ -553,7 +547,7 @@ public class MasterApiController {
 		return taskList;
 
 	}
-	
+
 	@RequestMapping(value = { "/getAllPhaseTypeList" }, method = RequestMethod.GET)
 	public @ResponseBody List<PhaseType> getAllPhaseTypeList() {
 
@@ -571,15 +565,14 @@ public class MasterApiController {
 		return phaseTypeList;
 
 	}
-	
+
 	@RequestMapping(value = { "/savePhaseTask" }, method = RequestMethod.POST)
 	public @ResponseBody PhaseTask savePhaseTask(@RequestBody PhaseTask phaseTask) {
 
-		PhaseTask  task = new PhaseTask();
+		PhaseTask task = new PhaseTask();
 
 		try {
 
-			 
 			task = phaseTaskRepository.save(phaseTask);
 
 		} catch (Exception e) {
@@ -590,22 +583,21 @@ public class MasterApiController {
 		return task;
 
 	}
-	
+
 	@RequestMapping(value = { "/phaseTaskById" }, method = RequestMethod.POST)
 	public @ResponseBody PhaseTask phaseTaskById(@RequestParam("tTaskPhaseId") int tTaskPhaseId) {
 
-		PhaseTask  task = new PhaseTask();
+		PhaseTask task = new PhaseTask();
 
 		try {
 
-			 
 			task = phaseTaskRepository.findBytTaskPhaseId(tTaskPhaseId);
-			if(task.getActualStartDate()!="" && task.getActualStartDate()!=null)
+			if (task.getActualStartDate() != "" && task.getActualStartDate() != null)
 				task.setActualStartDate(DateConvertor.convertToDMY(task.getActualStartDate()));
-			if(task.getAtcualEndDate()!="" && task.getAtcualEndDate()!=null)
+			if (task.getAtcualEndDate() != "" && task.getAtcualEndDate() != null)
 				task.setAtcualEndDate(DateConvertor.convertToDMY(task.getAtcualEndDate()));
-			
-			task.setExpEndDate(DateConvertor.convertToDMY(task.getExpEndDate())); 
+
+			task.setExpEndDate(DateConvertor.convertToDMY(task.getExpEndDate()));
 			task.setExpStartDate(DateConvertor.convertToDMY(task.getExpStartDate()));
 
 		} catch (Exception e) {
@@ -616,15 +608,14 @@ public class MasterApiController {
 		return task;
 
 	}
-	
+
 	@RequestMapping(value = { "/getPhaseTaskListByProjectId" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetPhaseTask> getPhaseTaskListByProjectId(@RequestParam("projectId") int projectId) {
 
-		List<GetPhaseTask>  getPhaseTaskList = new ArrayList<GetPhaseTask>();
+		List<GetPhaseTask> getPhaseTaskList = new ArrayList<GetPhaseTask>();
 
 		try {
 
-			 
 			getPhaseTaskList = getPhaseTaskRepository.getPhaseTaskListByProjectId(projectId);
 
 		} catch (Exception e) {
@@ -635,15 +626,14 @@ public class MasterApiController {
 		return getPhaseTaskList;
 
 	}
-	
-	@RequestMapping(value = { "/getTaskDetailsByTaskId" }, method = RequestMethod.POST)
-	public @ResponseBody  GetTaskList  getTaskDetailsByTaskId(@RequestParam("taskId") int taskId) {
 
-		GetTaskList  getTaskListList = new GetTaskList();
+	@RequestMapping(value = { "/getTaskDetailsByTaskId" }, method = RequestMethod.POST)
+	public @ResponseBody GetTaskList getTaskDetailsByTaskId(@RequestParam("taskId") int taskId) {
+
+		GetTaskList getTaskListList = new GetTaskList();
 
 		try {
 
-			 
 			getTaskListList = getTaskListRepository.findByTaskId(taskId);
 
 		} catch (Exception e) {
@@ -654,8 +644,7 @@ public class MasterApiController {
 		return getTaskListList;
 
 	}
-	
-	
+
 	@RequestMapping(value = { "/ongoingProjectList" }, method = RequestMethod.GET)
 	public @ResponseBody List<GetProjects> ongoingProjectList() {
 
@@ -664,11 +653,11 @@ public class MasterApiController {
 		try {
 
 			projectList = getProjectsRepo.ongoingProjectList();
-			
-			for(int i=0 ; i<projectList.size() ; i++)
-			{
+
+			for (int i = 0; i < projectList.size(); i++) {
 				System.err.println("projct id " + projectList.get(i).getProjectId());
-				List<DevloperListFromTask> devloperListFromTask = devloperListFromTaskRepo.devloperListFromTask(projectList.get(i).getProjectId()); 
+				List<DevloperListFromTask> devloperListFromTask = devloperListFromTaskRepo
+						.devloperListFromTask(projectList.get(i).getProjectId());
 				System.err.println("List " + devloperListFromTask);
 				projectList.get(i).setDevloperListFromTask(devloperListFromTask);
 			}
@@ -681,15 +670,14 @@ public class MasterApiController {
 		return projectList;
 
 	}
-	
+
 	@RequestMapping(value = { "/saveSupportTask" }, method = RequestMethod.POST)
 	public @ResponseBody SupportTask saveSupportTask(@RequestBody SupportTask supportTask) {
 
-		SupportTask  task = new SupportTask();
+		SupportTask task = new SupportTask();
 
 		try {
 
-			 
 			task = supportTaskRepository.save(supportTask);
 
 		} catch (Exception e) {
@@ -700,15 +688,14 @@ public class MasterApiController {
 		return task;
 
 	}
-	
-	@RequestMapping(value = { "/getSupportTaskBySuppId" }, method = RequestMethod.POST)
-	public @ResponseBody  GetSupportTask  getSupportTaskBySuppId(@RequestParam("suppId") int suppId) {
 
-		GetSupportTask  getSupportTaskBySuppId = new GetSupportTask();
+	@RequestMapping(value = { "/getSupportTaskBySuppId" }, method = RequestMethod.POST)
+	public @ResponseBody GetSupportTask getSupportTaskBySuppId(@RequestParam("suppId") int suppId) {
+
+		GetSupportTask getSupportTaskBySuppId = new GetSupportTask();
 
 		try {
 
-			 
 			getSupportTaskBySuppId = getSupportTaskRepository.getSupportTaskBySuppId(suppId);
 
 		} catch (Exception e) {
@@ -719,16 +706,16 @@ public class MasterApiController {
 		return getSupportTaskBySuppId;
 
 	}
-	
-	@RequestMapping(value = { "/getSupportTaskByEmpiId" }, method = RequestMethod.POST)
-	public @ResponseBody  List<GetSupportTask>  getSupportTaskByEmpiId(@RequestParam("empId") int empId) {
 
-		List<GetSupportTask>  getSupportTaskByEmpiId = new ArrayList<GetSupportTask>();
+	@RequestMapping(value = { "/getSupportTaskByEmpId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetSupportTask> getSupportTaskByEmpId(@RequestParam("empId") int empId,
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
+
+		List<GetSupportTask> getSupportTaskByEmpiId = new ArrayList<GetSupportTask>();
 
 		try {
 
-			 
-			getSupportTaskByEmpiId = getSupportTaskRepository.getSupportTaskByEmpiId(empId);
+			getSupportTaskByEmpiId = getSupportTaskRepository.getSupportTaskByEmpiId(empId, fromDate, toDate);
 
 		} catch (Exception e) {
 
@@ -738,6 +725,5 @@ public class MasterApiController {
 		return getSupportTaskByEmpiId;
 
 	}
-
 
 }
