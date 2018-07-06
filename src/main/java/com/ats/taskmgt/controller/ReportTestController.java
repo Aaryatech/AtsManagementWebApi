@@ -1,6 +1,7 @@
 package com.ats.taskmgt.controller;
 
 import java.sql.Date;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,10 +12,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.taskmgt.graph.model.ActualHrs;
+import com.ats.taskmgt.graph.model.EmployeeGraph;
+import com.ats.taskmgt.graph.model.EmployeeListWithActualHrs;
+import com.ats.taskmgt.graph.model.ProjectList;
+import com.ats.taskmgt.graph.repository.ActualHrsRepository;
+import com.ats.taskmgt.graph.repository.EmployeeListWithActualHrsRepo;
+import com.ats.taskmgt.graph.repository.ProjectListRepo;
 import com.ats.taskmgt.model.DevelopmentHrsProwise;
 import com.ats.taskmgt.model.EmpAllocatedWorkReport;
 import com.ats.taskmgt.model.EmpConReport;
 import com.ats.taskmgt.model.EmpPerformance;
+import com.ats.taskmgt.model.Employee;
 import com.ats.taskmgt.model.ProjectHours;
 import com.ats.taskmgt.model.ProjectPhaseTracking;
 import com.ats.taskmgt.model.RemainingTaskGraph;
@@ -23,6 +32,7 @@ import com.ats.taskmgt.repository.DevelopmentHrsProwiseRepo;
 import com.ats.taskmgt.repository.EmpAllocatedWorkRepo;
 import com.ats.taskmgt.repository.EmpPerformanceRepository;
 import com.ats.taskmgt.repository.EmployeeConsumptionRepository;
+import com.ats.taskmgt.repository.EmployeeRepository;
 import com.ats.taskmgt.repository.ProjectHoursRepo;
 import com.ats.taskmgt.repository.ProjectPhaseTrackingRepository;
 import com.ats.taskmgt.repository.RemainingTaskGraphRepo;
@@ -33,6 +43,18 @@ public class ReportTestController {
 
 	@Autowired
 	EmployeeConsumptionRepository employeeConsumptionRepository;
+
+	@Autowired
+	EmployeeRepository employeeRepository;
+
+	@Autowired
+	ProjectListRepo projectListRepo;
+
+	@Autowired
+	ActualHrsRepository actualHrsRepository;
+
+	@Autowired
+	EmployeeListWithActualHrsRepo employeeListWithActualHrsRepo;
 
 	@Autowired
 	SupportTaskReportrepo supportTaskReportrepo;
@@ -270,6 +292,60 @@ public class ReportTestController {
 
 		}
 		return supportTaskReportList;
+
+	}
+
+	@RequestMapping(value = "/getEmployeeProjectGraph", method = RequestMethod.GET)
+	public @ResponseBody EmployeeGraph getEmployeeProjectGraph() {
+
+		EmployeeGraph employeeGraphList = new EmployeeGraph();
+
+		List<ProjectList> proList = new ArrayList<>();
+
+		List<Employee> empList = new ArrayList<>();
+
+		List<ActualHrs> actualHrsList = new ArrayList<>();
+
+		ActualHrs actualHrs = new ActualHrs();
+
+		List<EmployeeListWithActualHrs> employeeListWithActualHrsList = new ArrayList<>();
+
+		try {
+			actualHrsList = actualHrsRepository.getActualHrsList();
+			proList = projectListRepo.getProjectList();
+
+			// get all emp list
+
+			empList = employeeRepository.findByIsUsed(1);
+			// repo - inputs emp id and project id --- return task id ,actual hrs
+
+			for (int i = 0; i < empList.size(); i++) {
+
+				for (int j = 0; j < proList.size(); j++) {
+
+					actualHrs = actualHrsRepository.getActualHrsListById(empList.get(i).getEmpId(),
+							proList.get(j).getProjectId());
+
+					List<ActualHrs> actualHrsList1 = new ArrayList<>();
+					actualHrsList1.add(actualHrs);
+
+				}
+			}
+
+			employeeListWithActualHrsList = employeeListWithActualHrsRepo.getEmployeeListWithActualHrsList();
+
+			for (int i = 0; i < employeeListWithActualHrsList.size(); i++) {
+				employeeListWithActualHrsList.get(i).setActualHrsList(actualHrsList);
+			}
+
+			employeeGraphList.setEmployeeListWithActualHrsList(employeeListWithActualHrsList);
+			employeeGraphList.setProjectList(proList);
+		} catch (Exception e) {
+			System.err.println("ex occ " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return employeeGraphList;
 
 	}
 
