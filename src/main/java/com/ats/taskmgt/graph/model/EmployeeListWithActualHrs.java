@@ -31,7 +31,7 @@ public class EmployeeListWithActualHrs {
 	public void setEmpName(String empName) {
 		this.empName = empName;
 	}
-
+  
 	public List<ActualHrs> getActualHrsList() {
 		return actualHrsList;
 	}

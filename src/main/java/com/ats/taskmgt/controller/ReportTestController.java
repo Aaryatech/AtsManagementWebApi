@@ -306,12 +306,12 @@ public class ReportTestController {
 
 		List<ActualHrs> actualHrsList = new ArrayList<>();
 
-		ActualHrs actualHrs = new ActualHrs();
+		//ActualHrs actualHrs = new ActualHrs();
 
 		List<EmployeeListWithActualHrs> employeeListWithActualHrsList = new ArrayList<>();
 
 		try {
-			actualHrsList = actualHrsRepository.getActualHrsList();
+			//actualHrsList = actualHrsRepository.getActualHrsList();
 			proList = projectListRepo.getProjectList();
 
 			// get all emp list
@@ -320,23 +320,31 @@ public class ReportTestController {
 			// repo - inputs emp id and project id --- return task id ,actual hrs
 
 			for (int i = 0; i < empList.size(); i++) {
-
+				
+				EmployeeListWithActualHrs employeeListWithActualHrs = new EmployeeListWithActualHrs();
+				employeeListWithActualHrs.setEmpId(empList.get(i).getEmpId());
+				employeeListWithActualHrs.setEmpName(empList.get(i).getEmpName());
+				
+				List<ActualHrs> actualHrsList1 = new ArrayList<ActualHrs>();
+				
 				for (int j = 0; j < proList.size(); j++) {
 
-					actualHrs = actualHrsRepository.getActualHrsListById(empList.get(i).getEmpId(),
+					ActualHrs actualHrs = actualHrsRepository.getActualHrsListById(empList.get(i).getEmpId(),
 							proList.get(j).getProjectId());
-
-					List<ActualHrs> actualHrsList1 = new ArrayList<>();
+ 
 					actualHrsList1.add(actualHrs);
 
 				}
+				
+				employeeListWithActualHrs.setActualHrsList(actualHrsList1);
+				employeeListWithActualHrsList.add(employeeListWithActualHrs);
 			}
 
-			employeeListWithActualHrsList = employeeListWithActualHrsRepo.getEmployeeListWithActualHrsList();
+			/*employeeListWithActualHrsList = employeeListWithActualHrsRepo.getEmployeeListWithActualHrsList();
 
 			for (int i = 0; i < employeeListWithActualHrsList.size(); i++) {
 				employeeListWithActualHrsList.get(i).setActualHrsList(actualHrsList);
-			}
+			}*/
 
 			employeeGraphList.setEmployeeListWithActualHrsList(employeeListWithActualHrsList);
 			employeeGraphList.setProjectList(proList);

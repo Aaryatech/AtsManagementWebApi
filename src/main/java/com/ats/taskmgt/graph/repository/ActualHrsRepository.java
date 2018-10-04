@@ -14,7 +14,8 @@ public interface ActualHrsRepository extends JpaRepository<ActualHrs, Integer> {
 			+ "GROUP BY t.project_id,t.developer_id", nativeQuery = true)
 	List<ActualHrs> getActualHrsList();
 
-	@Query(value = "SELECT t.task_id ,SUM(t.actual_req_hrs) AS  actual_req_hrs FROM t_task t WHERE t.developer_id=:developerId AND t.project_id=:projectId", nativeQuery = true)
+	@Query(value = "SELECT coalesce(t.task_id,0) as task_id , coalesce(SUM(t.actual_req_hrs),0) AS  actual_req_hrs FROM t_task t WHERE "
+			+ "t.developer_id=:developerId AND t.project_id=:projectId and t.dev_status=3", nativeQuery = true)
 	ActualHrs getActualHrsListById(@Param("developerId") int developerId, @Param("projectId") int projectId);
 
 }
