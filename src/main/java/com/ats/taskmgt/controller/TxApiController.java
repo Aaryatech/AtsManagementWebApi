@@ -323,4 +323,27 @@ public class TxApiController {
 
 	}
 
+	@RequestMapping(value = { "/getHeaderDetailCompByTechId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetComplexity> getHeaderDetailCompByTechId(@RequestParam("techId") int techId,
+			@RequestParam("phaseId") int phaseId) {
+
+		List<GetComplexity> techList = new ArrayList<GetComplexity>();
+
+		try {
+			techList = getComplexityRepo.getComplexityByIds(techId, phaseId);
+			for (int i = 0; i < techList.size(); i++) {
+				List<CmplxOption> optList = cmplxOptionRepo.findByCmplxId(techList.get(i).getCmplxId());
+				techList.get(i).setCmplxOptionList(optList);
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return techList;
+
+	}
+
 }

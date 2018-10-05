@@ -21,4 +21,6 @@ public interface CmplxOptionRepo extends JpaRepository<CmplxOption, Integer> {
 
 	List<CmplxOption> findByIsUsed(int i);
 
+	List<CmplxOption> findByCmplxId(int cmplxId);
+
 }
