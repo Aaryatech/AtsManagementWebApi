@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.taskmgt.model.Info;
 import com.ats.taskmgt.model.txapi.CmplxOption;
 import com.ats.taskmgt.model.txapi.Complexity;
+import com.ats.taskmgt.model.txapi.GetTech;
 import com.ats.taskmgt.model.txapi.Technology;
 import com.ats.taskmgt.repo.txapi.CmplxOptionRepo;
 import com.ats.taskmgt.repo.txapi.ComplexityRepo;
+import com.ats.taskmgt.repo.txapi.GetTechRepo;
 import com.ats.taskmgt.repo.txapi.TechnologyRepo;
 
 @RestController
@@ -24,6 +26,9 @@ public class TxApiController {
 
 	@Autowired
 	TechnologyRepo technologyRepo;
+
+	@Autowired
+	GetTechRepo getTechRepo;
 
 	@Autowired
 	ComplexityRepo complexityRepo;
@@ -239,7 +244,25 @@ public class TxApiController {
 
 		try {
 
-			techList = technologyRepo.findByIsUsed(1);
+			techList = technologyRepo.findByIsUsedOrderByTechIdDesc(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return techList;
+
+	}
+
+	@RequestMapping(value = { "/getAllTechPhaseList" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetTech> getAllTechPhaseList() {
+
+		List<GetTech> techList = new ArrayList<GetTech>();
+
+		try {
+
+			techList = getTechRepo.getTechPhaseName();
 
 		} catch (Exception e) {
 

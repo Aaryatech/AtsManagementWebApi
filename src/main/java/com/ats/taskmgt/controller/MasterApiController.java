@@ -309,7 +309,7 @@ public class MasterApiController {
 
 		try {
 
-			formTypeList = formTypeRepository.findByIsUsed(1);
+			formTypeList = formTypeRepository.findByIsUsedOrderByFormTypeIdDesc(1);
 
 		} catch (Exception e) {
 

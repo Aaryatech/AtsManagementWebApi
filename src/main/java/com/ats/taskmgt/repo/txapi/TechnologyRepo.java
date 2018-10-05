@@ -20,5 +20,7 @@ public interface TechnologyRepo extends JpaRepository<Technology, Integer> {
 	Technology findByTechId(int techId);
 
 	List<Technology> findByIsUsed(int i);
+	
+	List<Technology> findByIsUsedOrderByTechIdDesc(int i);
 
 }
