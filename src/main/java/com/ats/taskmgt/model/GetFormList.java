@@ -1,10 +1,13 @@
 package com.ats.taskmgt.model;
  
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class GetFormList {
@@ -35,6 +38,9 @@ public class GetFormList {
 	
 	@Column(name="form_type_name")
 	private String formTypeName;
+	
+	@Transient
+	List<GetTask> taskList;
 
 	public int getFormId() {
 		return formId;
@@ -100,11 +106,19 @@ public class GetFormList {
 		this.formTypeName = formTypeName;
 	}
 
+	public List<GetTask> getTaskList() {
+		return taskList;
+	}
+
+	public void setTaskList(List<GetTask> taskList) {
+		this.taskList = taskList;
+	}
+
 	@Override
 	public String toString() {
 		return "GetFormList [formId=" + formId + ", formName=" + formName + ", projectId=" + projectId
 				+ ", projectName=" + projectName + ", moduleId=" + moduleId + ", moduleName=" + moduleName
-				+ ", form_type_id=" + form_type_id + ", formTypeName=" + formTypeName + "]";
+				+ ", form_type_id=" + form_type_id + ", formTypeName=" + formTypeName + ", taskList=" + taskList + "]";
 	}
 	
 	

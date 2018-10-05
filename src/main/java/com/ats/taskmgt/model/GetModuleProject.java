@@ -25,6 +25,20 @@ public class GetModuleProject {
 	
 	String projectName;
 	
+	@Column(name="tech_id")
+	private String techId;
+	
+	@Column(name="phase_id")
+	private String phaseId;
+	
+	@Column(name="phase_name")
+	private String phaseName;
+	
+	@Column(name="tech_name")
+	private String techName;
+	
+	@Column(name="del_status")
+	private int delStatus;
 	
 
 	public int getModuleId() {
@@ -67,10 +81,51 @@ public class GetModuleProject {
 		this.projectName = projectName;
 	}
 
+	public String getPhaseName() {
+		return phaseName;
+	}
+
+	public void setPhaseName(String phaseName) {
+		this.phaseName = phaseName;
+	}
+
+	public String getTechName() {
+		return techName;
+	}
+
+	public void setTechName(String techName) {
+		this.techName = techName;
+	}
+
+	public String getTechId() {
+		return techId;
+	}
+
+	public void setTechId(String techId) {
+		this.techId = techId;
+	}
+
+	public String getPhaseId() {
+		return phaseId;
+	}
+
+	public void setPhaseId(String phaseId) {
+		this.phaseId = phaseId;
+	}
+
+	public int getDelStatus() {
+		return delStatus;
+	}
+
+	public void setDelStatus(int delStatus) {
+		this.delStatus = delStatus;
+	}
+
 	@Override
 	public String toString() {
 		return "GetModuleProject [moduleId=" + moduleId + ", projectId=" + projectId + ", moduleName=" + moduleName
-				+ ", moduleDesc=" + moduleDesc + ", projectName=" + projectName + "]";
+				+ ", moduleDesc=" + moduleDesc + ", projectName=" + projectName + ", techId=" + techId + ", phaseId="
+				+ phaseId + ", phaseName=" + phaseName + ", techName=" + techName + ", delStatus=" + delStatus + "]";
 	}
 
 	

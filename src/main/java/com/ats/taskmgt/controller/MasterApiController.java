@@ -309,7 +309,7 @@ public class MasterApiController {
 
 		try {
 
-			formTypeList = formTypeRepository.findByIsUsedOrderByFormTypeIdDesc(1);
+			formTypeList = formTypeRepository.findByIsUsed(1);
 
 		} catch (Exception e) {
 
@@ -409,6 +409,33 @@ public class MasterApiController {
 
 		}
 		return moduleList;
+
+	}
+	
+	@RequestMapping(value = { "/deleteModule" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteModule(@RequestParam("moduleId") int moduleId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = moduleRepository.delete(moduleId);
+			
+			if(delete==1) {
+				
+				info.setError(false);
+				info.setMessage("deleted");
+			}
+			else {
+				info.setError(true);
+				info.setMessage("failed deleted");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return info;
 
 	}
 
@@ -524,11 +551,51 @@ public class MasterApiController {
 		return ModuleProjectList;
 
 	}
+	
+	@RequestMapping(value = { "/getModuleByModuleId" }, method = RequestMethod.POST)
+	public @ResponseBody GetModuleProject getModuleByModuleId(@RequestParam("moduleId") int moduleId) {
+
+		 GetModuleProject getModuleProject = new  GetModuleProject ();
+
+		try {
+
+			getModuleProject = getModuleProjectRepo.getModuleByModuleId(moduleId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return getModuleProject;
+
+	}
 
 	@RequestMapping(value = { "/getFormListByProjectId" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetFormList> getFormListByProjectId(@RequestParam("projectId") int projectId) {
 
 		List<GetFormList> getFormList = getFormListRepository.getFormListByProjectId(projectId);
+
+		return getFormList;
+	}
+	
+	@RequestMapping(value = { "/getFormAndTaskListByModuleId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetFormList> getFormListByModuleId(@RequestParam("moduleId") int moduleId) {
+
+		List<GetFormList> getFormList = new ArrayList<>();
+		
+		try {
+			getFormList = getFormListRepository.getFormListByModuleId(moduleId);
+			
+			for(int i=0 ; i<getFormList.size() ; i++) {
+				
+				List<GetTask> taskList = getTaskRepository.findByFormId(getFormList.get(i).getFormId());
+				getFormList.get(i).setTaskList(taskList);
+			}
+			
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		return getFormList;
 	}
