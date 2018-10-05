@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.taskmgt.model.Info;
 import com.ats.taskmgt.model.txapi.CmplxOption;
 import com.ats.taskmgt.model.txapi.Complexity;
+import com.ats.taskmgt.model.txapi.GetComplexity;
 import com.ats.taskmgt.model.txapi.GetTech;
 import com.ats.taskmgt.model.txapi.Technology;
 import com.ats.taskmgt.repo.txapi.CmplxOptionRepo;
 import com.ats.taskmgt.repo.txapi.ComplexityRepo;
+import com.ats.taskmgt.repo.txapi.GetComplexityRepo;
 import com.ats.taskmgt.repo.txapi.GetTechRepo;
 import com.ats.taskmgt.repo.txapi.TechnologyRepo;
 
@@ -35,6 +37,9 @@ public class TxApiController {
 
 	@Autowired
 	CmplxOptionRepo cmplxOptionRepo;
+
+	@Autowired
+	GetComplexityRepo getComplexityRepo;
 
 	// ----------------------------------------ComplexityOption------------------------------------------
 
@@ -297,6 +302,24 @@ public class TxApiController {
 
 		}
 		return info;
+
+	}
+
+	@RequestMapping(value = { "/getAllComplexityList" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetComplexity> getAllComplexityList() {
+
+		List<GetComplexity> techList = new ArrayList<GetComplexity>();
+
+		try {
+
+			techList = getComplexityRepo.getComplexityAllName();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return techList;
 
 	}
 
