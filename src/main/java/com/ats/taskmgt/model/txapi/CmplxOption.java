@@ -1,5 +1,6 @@
 package com.ats.taskmgt.model.txapi;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,11 +20,13 @@ public class CmplxOption {
 
 	private int isUsed;
 	private String cmplxOptDate;
-
+	@Column(name = "inta")
 	private int int1;
+	@Column(name = "intb")
 	private int int2;
-
+	@Column(name = "varchar1")
 	private String varchar1;
+	@Column(name = "varchar2")
 	private String varchar2;
 
 	public int getCmplxOptId() {
