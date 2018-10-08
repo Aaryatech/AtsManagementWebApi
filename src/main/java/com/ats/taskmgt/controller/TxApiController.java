@@ -14,20 +14,29 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.taskmgt.model.Info;
 import com.ats.taskmgt.model.txapi.CmplxOption;
 import com.ats.taskmgt.model.txapi.Complexity;
+import com.ats.taskmgt.model.txapi.GetCmplxHrs;
 import com.ats.taskmgt.model.txapi.GetComplexity;
+import com.ats.taskmgt.model.txapi.GetComplexityOption;
+import com.ats.taskmgt.model.txapi.GetFormType;
 import com.ats.taskmgt.model.txapi.GetTech;
 import com.ats.taskmgt.model.txapi.Technology;
 import com.ats.taskmgt.repo.txapi.CmplxOptionRepo;
 import com.ats.taskmgt.repo.txapi.ComplexityRepo;
+import com.ats.taskmgt.repo.txapi.GetComplexityOptionRepo;
 import com.ats.taskmgt.repo.txapi.GetComplexityRepo;
+import com.ats.taskmgt.repo.txapi.GetFormTypeRepo;
 import com.ats.taskmgt.repo.txapi.GetTechRepo;
 import com.ats.taskmgt.repo.txapi.TechnologyRepo;
+import com.ats.taskmgt.repository.GetCmplxHrsRepo;
 
 @RestController
 public class TxApiController {
 
 	@Autowired
 	TechnologyRepo technologyRepo;
+
+	@Autowired
+	GetCmplxHrsRepo getCmplxHrsRepo;
 
 	@Autowired
 	GetTechRepo getTechRepo;
@@ -41,6 +50,30 @@ public class TxApiController {
 	@Autowired
 	GetComplexityRepo getComplexityRepo;
 
+	@Autowired
+	GetComplexityOptionRepo getComplexityOptionRepo;
+
+	@Autowired
+	GetFormTypeRepo getFormTypeRepo;
+
+	@RequestMapping(value = { "/getAllFormTypeList" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetFormType> getAllFormTypeList() {
+
+		List<GetFormType> techList = new ArrayList<GetFormType>();
+
+		try {
+
+			techList = getFormTypeRepo.getFormTechPhaseName();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return techList;
+
+	}
+
 	// ----------------------------------------ComplexityOption------------------------------------------
 
 	@RequestMapping(value = { "/saveComplexityOption" }, method = RequestMethod.POST)
@@ -51,6 +84,24 @@ public class TxApiController {
 		try {
 
 			comp = cmplxOptionRepo.saveAndFlush(cmplxOption);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return comp;
+
+	}
+
+	@RequestMapping(value = { "/saveComplexityOptionList" }, method = RequestMethod.POST)
+	public @ResponseBody List<CmplxOption> saveComplexityOptionList(@RequestBody List<CmplxOption> cmplxOptionList) {
+
+		List<CmplxOption> comp = new ArrayList<CmplxOption>();
+
+		try {
+
+			comp = cmplxOptionRepo.saveAll(cmplxOptionList);
 
 		} catch (Exception e) {
 
@@ -86,6 +137,24 @@ public class TxApiController {
 		try {
 
 			compList = cmplxOptionRepo.findByIsUsed(1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return compList;
+
+	}
+
+	@RequestMapping(value = { "/getAllCompOptionListWithName" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetComplexityOption> getAllCompOptionListWithName() {
+
+		List<GetComplexityOption> compList = new ArrayList<GetComplexityOption>();
+
+		try {
+
+			compList = getComplexityOptionRepo.getComplexityOption();
 
 		} catch (Exception e) {
 
@@ -336,6 +405,70 @@ public class TxApiController {
 				techList.get(i).setCmplxOptionList(optList);
 
 			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return techList;
+
+	}
+
+	@RequestMapping(value = { "/getCompByTechIdListAndPhaseIdList" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetComplexity> getCompByTechIdListAndPhaseIdList(
+			@RequestParam("techId") List<Integer> techId, @RequestParam("phaseId") List<Integer> phaseId) {
+
+		List<GetComplexity> techList = new ArrayList<GetComplexity>();
+
+		try {
+			techList = getComplexityRepo.getComplexityByIdsList(techId, phaseId);
+			for (int i = 0; i < techList.size(); i++) {
+				List<CmplxOption> optList = cmplxOptionRepo.findByCmplxId(techList.get(i).getCmplxId());
+				techList.get(i).setCmplxOptionList(optList);
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return techList;
+
+	}
+
+	@RequestMapping(value = { "/getCompListByIdList" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetCmplxHrs> getCompListByIdList(@RequestParam("techId") List<Integer> techId,
+			@RequestParam("phaseId") List<Integer> phaseId, @RequestParam("cmplxOptId") List<Integer> cmplxOptId) {
+
+		List<GetCmplxHrs> techList = new ArrayList<GetCmplxHrs>();
+
+		try {
+
+			if (techId.contains(0) && phaseId.contains(0) && cmplxOptId.contains(0)) {
+				techList = getCmplxHrsRepo.getComplexAllocatedHrs();
+			} else {
+				techList = getCmplxHrsRepo.getComplexAllocatedHrsByList(techId, phaseId, cmplxOptId);
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return techList;
+
+	}
+
+	@RequestMapping(value = { "/getAllCmplxOptionListAllocatedHrs" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetCmplxHrs> getAllCmplxOptionListAllocatedHrs() {
+
+		List<GetCmplxHrs> techList = new ArrayList<GetCmplxHrs>();
+
+		try {
+
+			techList = getCmplxHrsRepo.getComplexAllocatedHrs();
 
 		} catch (Exception e) {
 

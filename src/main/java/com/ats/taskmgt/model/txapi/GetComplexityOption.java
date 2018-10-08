@@ -26,6 +26,8 @@ public class GetComplexityOption {
 	@Column(name = "varchar2")
 	private String varchar2;
 
+	private String cmplxName;
+
 	public int getCmplxOptId() {
 		return cmplxOptId;
 	}
@@ -106,12 +108,20 @@ public class GetComplexityOption {
 		this.varchar2 = varchar2;
 	}
 
+	public String getCmplxName() {
+		return cmplxName;
+	}
+
+	public void setCmplxName(String cmplxName) {
+		this.cmplxName = cmplxName;
+	}
+
 	@Override
 	public String toString() {
 		return "GetComplexityOption [cmplxOptId=" + cmplxOptId + ", cmplxId=" + cmplxId + ", cmplxOptName="
 				+ cmplxOptName + ", allocatedHrs=" + allocatedHrs + ", isUsed=" + isUsed + ", cmplxOptDate="
 				+ cmplxOptDate + ", int1=" + int1 + ", int2=" + int2 + ", varchar1=" + varchar1 + ", varchar2="
-				+ varchar2 + "]";
+				+ varchar2 + ", cmplxName=" + cmplxName + "]";
 	}
 
 }

@@ -301,6 +301,65 @@ public class MasterApiController {
 	}
 
 	// -------------------------------formType--------------------------
+	@RequestMapping(value = { "/deleteFormType" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteFormType(@RequestParam("formTypeId") int formTypeId) {
+
+		Info info = new Info();
+
+		try {
+			int delete = formTypeRepository.deleteFormType(formTypeId);
+
+			if (delete == 1) {
+
+				info.setError(false);
+				info.setMessage("deleted");
+			} else {
+				info.setError(true);
+				info.setMessage("failed deleted");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/saveFormType" }, method = RequestMethod.POST)
+	public @ResponseBody FormType saveFormType(@RequestBody FormType form) {
+
+		FormType formType = new FormType();
+
+		try {
+			formType = formTypeRepository.saveAndFlush(form);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return formType;
+
+	}
+
+	@RequestMapping(value = { "/formTypeByFormTypeId" }, method = RequestMethod.POST)
+	public @ResponseBody FormType formTypeByFormTypeId(@RequestParam("formTypeId") int formTypeId) {
+
+		FormType form = new FormType();
+
+		try {
+			form = formTypeRepository.findByFormTypeId(formTypeId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return form;
+
+	}
 
 	@RequestMapping(value = { "/getAllFormType" }, method = RequestMethod.GET)
 	public @ResponseBody List<FormType> getAllFormType() {
@@ -411,7 +470,7 @@ public class MasterApiController {
 		return moduleList;
 
 	}
-	
+
 	@RequestMapping(value = { "/deleteModule" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteModule(@RequestParam("moduleId") int moduleId) {
 
@@ -419,13 +478,12 @@ public class MasterApiController {
 
 		try {
 			int delete = moduleRepository.delete(moduleId);
-			
-			if(delete==1) {
-				
+
+			if (delete == 1) {
+
 				info.setError(false);
 				info.setMessage("deleted");
-			}
-			else {
+			} else {
 				info.setError(true);
 				info.setMessage("failed deleted");
 			}
@@ -551,11 +609,11 @@ public class MasterApiController {
 		return ModuleProjectList;
 
 	}
-	
+
 	@RequestMapping(value = { "/getModuleByModuleId" }, method = RequestMethod.POST)
 	public @ResponseBody GetModuleProject getModuleByModuleId(@RequestParam("moduleId") int moduleId) {
 
-		 GetModuleProject getModuleProject = new  GetModuleProject ();
+		GetModuleProject getModuleProject = new GetModuleProject();
 
 		try {
 
@@ -577,23 +635,22 @@ public class MasterApiController {
 
 		return getFormList;
 	}
-	
+
 	@RequestMapping(value = { "/getFormAndTaskListByModuleId" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetFormList> getFormListByModuleId(@RequestParam("moduleId") int moduleId) {
 
 		List<GetFormList> getFormList = new ArrayList<>();
-		
+
 		try {
 			getFormList = getFormListRepository.getFormListByModuleId(moduleId);
-			
-			for(int i=0 ; i<getFormList.size() ; i++) {
-				
+
+			for (int i = 0; i < getFormList.size(); i++) {
+
 				List<GetTask> taskList = getTaskRepository.findByFormId(getFormList.get(i).getFormId());
 				getFormList.get(i).setTaskList(taskList);
 			}
-			
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
