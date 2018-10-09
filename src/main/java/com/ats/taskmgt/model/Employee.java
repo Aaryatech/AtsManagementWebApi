@@ -1,13 +1,12 @@
 package com.ats.taskmgt.model;
 
 import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "m_employee")
@@ -53,6 +52,24 @@ public class Employee {
 
 	@Column(name = "total_leaves")
 	private int totalLeaves;
+
+	@Column(name = "from_date")
+	private String fromDate;
+
+	@Column(name = "to_date")
+	private String toDate;
+
+	@Column(name = "sick_leave")
+	private float sickLeave;
+
+	@Column(name = "causal_leave")
+	private float causalLeave;
+
+	@Column(name = "tech_id")
+	private int techId;
+
+	@Column(name = "m_phase_id")
+	private int mPhaseId;
 
 	public int getEmpId() {
 		return empId;
@@ -158,13 +175,62 @@ public class Employee {
 		this.totalLeaves = totalLeaves;
 	}
 
+	public String getFromDate() {
+		return fromDate;
+	}
+
+	public void setFromDate(String fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	public String getToDate() {
+		return toDate;
+	}
+
+	public void setToDate(String toDate) {
+		this.toDate = toDate;
+	}
+
+	public float getSickLeave() {
+		return sickLeave;
+	}
+
+	public void setSickLeave(float sickLeave) {
+		this.sickLeave = sickLeave;
+	}
+
+	public float getCausalLeave() {
+		return causalLeave;
+	}
+
+	public void setCausalLeave(float causalLeave) {
+		this.causalLeave = causalLeave;
+	}
+
+	public int getTechId() {
+		return techId;
+	}
+
+	public void setTechId(int techId) {
+		this.techId = techId;
+	}
+
+	public int getmPhaseId() {
+		return mPhaseId;
+	}
+
+	public void setmPhaseId(int mPhaseId) {
+		this.mPhaseId = mPhaseId;
+	}
+
 	@Override
 	public String toString() {
 		return "Employee [empId=" + empId + ", empName=" + empName + ", empMobile=" + empMobile + ", empEdu=" + empEdu
 				+ ", empBirthdate=" + empBirthdate + ", empDesignation=" + empDesignation + ", empPwd=" + empPwd
 				+ ", empPrevExp=" + empPrevExp + ", empJoiningDate=" + empJoiningDate + ", isUsed=" + isUsed
-				+ ", empPerHrRate=" + empPerHrRate + ", empType=" + empType + ", totalLeaves=" + totalLeaves + "]";
+				+ ", empPerHrRate=" + empPerHrRate + ", empType=" + empType + ", totalLeaves=" + totalLeaves
+				+ ", fromDate=" + fromDate + ", toDate=" + toDate + ", sickLeave=" + sickLeave + ", causalLeave="
+				+ causalLeave + ", techId=" + techId + ", mPhaseId=" + mPhaseId + "]";
 	}
-
 
 }

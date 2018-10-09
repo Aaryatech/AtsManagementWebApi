@@ -121,6 +121,8 @@ public class MasterApiController {
 
 			employee.setEmpBirthdate(DateConvertor.convertToYMD(employee.getEmpBirthdate()));
 			employee.setEmpJoiningDate(DateConvertor.convertToYMD(employee.getEmpJoiningDate()));
+			employee.setFromDate(DateConvertor.convertToYMD(employee.getFromDate()));
+			employee.setToDate(DateConvertor.convertToYMD(employee.getToDate()));
 			emp = employeeRepository.saveAndFlush(employee);
 
 		} catch (Exception e) {
@@ -190,6 +192,9 @@ public class MasterApiController {
 				employeeList.get(i).setEmpBirthdate(DateConvertor.convertToDMY(employeeList.get(i).getEmpBirthdate()));
 				employeeList.get(i)
 						.setEmpJoiningDate(DateConvertor.convertToDMY(employeeList.get(i).getEmpJoiningDate()));
+				employeeList.get(i).setFromDate(DateConvertor.convertToDMY(employeeList.get(i).getFromDate()));
+				employeeList.get(i).setToDate(DateConvertor.convertToDMY(employeeList.get(i).getToDate()));
+
 			}
 
 		} catch (Exception e) {
@@ -847,6 +852,24 @@ public class MasterApiController {
 
 		}
 		return getSupportTaskByEmpiId;
+
+	}
+
+	@RequestMapping(value = { "/getSupportTaskByProjectId" }, method = RequestMethod.POST)
+	public @ResponseBody List<SupportTask> getSupportTaskByProjectId(@RequestParam("projectId") int projectId) {
+
+		List<SupportTask> supportTask = new ArrayList<SupportTask>();
+
+		try {
+
+			supportTask = supportTaskRepository.findByProjectId(projectId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return supportTask;
 
 	}
 
