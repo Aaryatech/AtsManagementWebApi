@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.taskmgt.common.DateConvertor;
-import com.ats.taskmgt.model.Employee;
 import com.ats.taskmgt.model.Info;
 import com.ats.taskmgt.model.leave.ApplyLeave;
 import com.ats.taskmgt.repo.leave.ApplyLeaveRepo;

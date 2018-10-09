@@ -180,6 +180,32 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/employeeByTechIdAndPhaseId" }, method = RequestMethod.POST)
+	public @ResponseBody List<Employee> employeeByTechIdAndPhaseId(@RequestParam("techId") int techId,
+			@RequestParam("mPhaseId") int mPhaseId) {
+
+		List<Employee> employeeList = new ArrayList<Employee>();
+		try {
+
+			employeeList = employeeRepository.findByTechIdAndMPhaseIdAndIsUsed(techId, mPhaseId, 1);
+			for (int i = 0; i < employeeList.size(); i++) {
+				employeeList.get(i).setEmpBirthdate(DateConvertor.convertToDMY(employeeList.get(i).getEmpBirthdate()));
+				employeeList.get(i)
+						.setEmpJoiningDate(DateConvertor.convertToDMY(employeeList.get(i).getEmpJoiningDate()));
+				employeeList.get(i).setFromDate(DateConvertor.convertToDMY(employeeList.get(i).getFromDate()));
+				employeeList.get(i).setToDate(DateConvertor.convertToDMY(employeeList.get(i).getToDate()));
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return employeeList;
+
+	}
+
 	@RequestMapping(value = { "/getAllEmpList" }, method = RequestMethod.GET)
 	public @ResponseBody List<Employee> getAllEmpList() {
 
