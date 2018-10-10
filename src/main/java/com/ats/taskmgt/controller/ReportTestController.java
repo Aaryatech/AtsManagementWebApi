@@ -151,6 +151,24 @@ public class ReportTestController {
 		return empAllocatedWorkReport;
 
 	}
+	
+	@RequestMapping(value = "/getEmpAllocatedWorkHoursByDate", method = RequestMethod.POST)
+	public @ResponseBody EmpAllocatedWorkReport getEmpAllocatedWorkHoursByDate(@RequestParam("date") String date,
+			@RequestParam("empId") int empId) {
+
+		EmpAllocatedWorkReport empAllocatedWorkReport = new EmpAllocatedWorkReport();
+
+		try {
+			 
+				empAllocatedWorkReport = empAllocatedWorkRepo.getEmpAllocatedWorkHoursByDate(date, empId); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return empAllocatedWorkReport;
+
+	}
 
 	// -------------------------------------------------------------------------
 	// ----------------------- Employee Performance--------
