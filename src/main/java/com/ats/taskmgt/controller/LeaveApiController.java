@@ -152,6 +152,29 @@ public class LeaveApiController {
 
 	}
 
+	@RequestMapping(value = { "/getAllLeaveListByLeaveId" }, method = RequestMethod.POST)
+	public @ResponseBody GetApplyLeave getAllLeaveListByLeaveId(@RequestParam("leaveId") int leaveId) {
+
+		GetApplyLeave leaveList = new GetApplyLeave();
+
+		try {
+
+			leaveList = getApplyLeaveRepo.getApplyLeaveByLeaveId(leaveId);
+
+			leaveList.setDate(DateConvertor.convertToDMY(leaveList.getDate()));
+
+			leaveList.setFromDate(DateConvertor.convertToDMY(leaveList.getFromDate()));
+			leaveList.setToDate(DateConvertor.convertToDMY(leaveList.getToDate()));
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return leaveList;
+
+	}
+
 	@RequestMapping(value = { "/getAllLeaveListBySendTo" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetApplyLeave> getAllLeaveListBySendTo(@RequestParam("empId") int empId) {
 
