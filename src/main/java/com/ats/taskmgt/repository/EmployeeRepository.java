@@ -26,4 +26,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
 	List<Employee> findByTechIdAndMPhaseIdAndIsUsed(int techId, int mPhaseId, int i);
 
+	List<Employee> findByIsUsedAndEmpType(int i, int j);
+
 }

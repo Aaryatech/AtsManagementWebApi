@@ -179,6 +179,9 @@ public class MasterApiController {
 		return employee;
 
 	}
+	
+	
+	
 
 	@RequestMapping(value = { "/employeeByTechIdAndPhaseId" }, method = RequestMethod.POST)
 	public @ResponseBody List<Employee> employeeByTechIdAndPhaseId(@RequestParam("techId") int techId,
@@ -214,6 +217,32 @@ public class MasterApiController {
 		try {
 
 			employeeList = employeeRepository.findByIsUsed(1);
+			for (int i = 0; i < employeeList.size(); i++) {
+				employeeList.get(i).setEmpBirthdate(DateConvertor.convertToDMY(employeeList.get(i).getEmpBirthdate()));
+				employeeList.get(i)
+						.setEmpJoiningDate(DateConvertor.convertToDMY(employeeList.get(i).getEmpJoiningDate()));
+				employeeList.get(i).setFromDate(DateConvertor.convertToDMY(employeeList.get(i).getFromDate()));
+				employeeList.get(i).setToDate(DateConvertor.convertToDMY(employeeList.get(i).getToDate()));
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return employeeList;
+
+	}
+	
+	@RequestMapping(value = { "/getAllEmpListByType" }, method = RequestMethod.GET)
+	public @ResponseBody List<Employee> getAllEmpListByType() {
+
+		List<Employee> employeeList = new ArrayList<Employee>();
+
+		try {
+
+			employeeList = employeeRepository.findByIsUsedAndEmpType(1,2);
 			for (int i = 0; i < employeeList.size(); i++) {
 				employeeList.get(i).setEmpBirthdate(DateConvertor.convertToDMY(employeeList.get(i).getEmpBirthdate()));
 				employeeList.get(i)

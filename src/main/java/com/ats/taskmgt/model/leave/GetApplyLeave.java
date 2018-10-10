@@ -5,12 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "apply_leave")
-public class ApplyLeave {
-
+public class GetApplyLeave {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "leave_id")
@@ -25,6 +22,8 @@ public class ApplyLeave {
 	private float noOfDays;
 	private int empId;
 	private int payLeave;
+	
+	private String empName;
 
 	private String empRemark;
 	private String approveRemark;
@@ -143,13 +142,23 @@ public class ApplyLeave {
 	public void setPayLeave(int payLeave) {
 		this.payLeave = payLeave;
 	}
+	
+	
+
+	public String getEmpName() {
+		return empName;
+	}
+
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
 
 	@Override
 	public String toString() {
-		return "ApplyLeave [leaveId=" + leaveId + ", date=" + date + ", fromDate=" + fromDate + ", toDate=" + toDate
+		return "GetApplyLeave [leaveId=" + leaveId + ", date=" + date + ", fromDate=" + fromDate + ", toDate=" + toDate
 				+ ", approveDate=" + approveDate + ", type=" + type + ", status=" + status + ", noOfDays=" + noOfDays
-				+ ", empId=" + empId + ", payLeave=" + payLeave + ", empRemark=" + empRemark + ", approveRemark="
-				+ approveRemark + ", sendTo=" + sendTo + ", isUsed=" + isUsed + "]";
+				+ ", empId=" + empId + ", payLeave=" + payLeave + ", empName=" + empName + ", empRemark=" + empRemark
+				+ ", approveRemark=" + approveRemark + ", sendTo=" + sendTo + ", isUsed=" + isUsed + "]";
 	}
 
 }

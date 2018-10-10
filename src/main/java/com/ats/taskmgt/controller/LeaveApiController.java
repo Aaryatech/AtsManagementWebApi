@@ -16,14 +16,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.taskmgt.common.DateConvertor;
 import com.ats.taskmgt.model.Info;
 import com.ats.taskmgt.model.leave.ApplyLeave;
+import com.ats.taskmgt.model.leave.GetApplyLeave;
 import com.ats.taskmgt.repo.leave.ApplyLeaveRepo;
+import com.ats.taskmgt.repo.leave.GetApplyLeaveRepo;
 
 @RestController
-public class LeaveController {
+public class LeaveApiController {
 	@Autowired
 	ApplyLeaveRepo applyLeaveRepo;
 
-	// --------------------------------------------------Project-----------------------------------------------------
+	@Autowired
+	GetApplyLeaveRepo getApplyLeaveRepo;
+
+	// --------------------------------------------------Leave-----------------------------------------------------
 
 	@RequestMapping(value = { "/saveLeave" }, method = RequestMethod.POST)
 	public @ResponseBody ApplyLeave saveLeave(@RequestBody ApplyLeave applyLeave) {
@@ -105,6 +110,56 @@ public class LeaveController {
 		try {
 
 			leaveList = applyLeaveRepo.findByIsUsed(1);
+			for (int i = 0; i < leaveList.size(); i++) {
+				leaveList.get(i).setDate(DateConvertor.convertToDMY(leaveList.get(i).getDate()));
+
+				leaveList.get(i).setFromDate(DateConvertor.convertToDMY(leaveList.get(i).getFromDate()));
+				leaveList.get(i).setToDate(DateConvertor.convertToDMY(leaveList.get(i).getToDate()));
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return leaveList;
+
+	}
+
+	@RequestMapping(value = { "/getAllLeaveListByEmpId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetApplyLeave> getAllLeaveListByEmpId(@RequestParam("empId") int empId) {
+
+		List<GetApplyLeave> leaveList = new ArrayList<GetApplyLeave>();
+
+		try {
+
+			leaveList = getApplyLeaveRepo.getApplyLeaveByEmpId(empId);
+			for (int i = 0; i < leaveList.size(); i++) {
+				leaveList.get(i).setDate(DateConvertor.convertToDMY(leaveList.get(i).getDate()));
+
+				leaveList.get(i).setFromDate(DateConvertor.convertToDMY(leaveList.get(i).getFromDate()));
+				leaveList.get(i).setToDate(DateConvertor.convertToDMY(leaveList.get(i).getToDate()));
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return leaveList;
+
+	}
+
+	@RequestMapping(value = { "/getAllLeaveListBySendTo" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetApplyLeave> getAllLeaveListBySendTo(@RequestParam("empId") int empId) {
+
+		List<GetApplyLeave> leaveList = new ArrayList<GetApplyLeave>();
+
+		try {
+
+			leaveList = getApplyLeaveRepo.getApplyLeaveBySendTo(empId);
 			for (int i = 0; i < leaveList.size(); i++) {
 				leaveList.get(i).setDate(DateConvertor.convertToDMY(leaveList.get(i).getDate()));
 
