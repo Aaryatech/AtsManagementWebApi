@@ -9,14 +9,18 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ats.taskmgt.model.leave.ApplyLeave;
+import com.ats.taskmgt.model.leave.GetApplyLeave;
 
 public interface ApplyLeaveRepo extends JpaRepository<ApplyLeave, Integer> {
 	@Transactional
 	@Modifying
 	@Query("UPDATE ApplyLeave SET isUsed=1  WHERE leave_id=:leaveId")
-	int deleteApplayLeave(@Param("leaveId")int leaveId);
+	int deleteApplayLeave(@Param("leaveId") int leaveId);
 
 	ApplyLeave findByLeaveIdAndIsUsed(int leaveId, int i);
 
 	List<ApplyLeave> findByIsUsed(int i);
+
+	
+
 }

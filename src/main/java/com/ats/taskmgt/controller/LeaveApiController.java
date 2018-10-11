@@ -17,13 +17,18 @@ import com.ats.taskmgt.common.DateConvertor;
 import com.ats.taskmgt.model.Info;
 import com.ats.taskmgt.model.leave.ApplyLeave;
 import com.ats.taskmgt.model.leave.GetApplyLeave;
+import com.ats.taskmgt.model.leave.GetLeaveCount;
 import com.ats.taskmgt.repo.leave.ApplyLeaveRepo;
 import com.ats.taskmgt.repo.leave.GetApplyLeaveRepo;
+import com.ats.taskmgt.repo.leave.GetLeaveCountRepo;
 
 @RestController
 public class LeaveApiController {
 	@Autowired
 	ApplyLeaveRepo applyLeaveRepo;
+
+	@Autowired
+	GetLeaveCountRepo getLeaveCountRepo;
 
 	@Autowired
 	GetApplyLeaveRepo getApplyLeaveRepo;
@@ -80,6 +85,38 @@ public class LeaveApiController {
 
 		}
 		return info;
+
+	}
+
+	@RequestMapping(value = { "/getCountForSickLeave" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetLeaveCount> getCountForSickLeave() {
+		List<GetLeaveCount> leavelist = new ArrayList<>();
+
+		try {
+			leavelist = getLeaveCountRepo.getCountForSickLeave();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return leavelist;
+
+	}
+
+	@RequestMapping(value = { "/getCountForCasualLeave" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetLeaveCount> getCountForCasualLeave() {
+		List<GetLeaveCount> leavelist = new ArrayList<>();
+
+		try {
+			leavelist = getLeaveCountRepo.getCountForCasualLeave();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return leavelist;
 
 	}
 
@@ -152,8 +189,8 @@ public class LeaveApiController {
 
 	}
 
-	@RequestMapping(value = { "/getAllLeaveListByLeaveId" }, method = RequestMethod.POST)
-	public @ResponseBody GetApplyLeave getAllLeaveListByLeaveId(@RequestParam("leaveId") int leaveId) {
+	@RequestMapping(value = { "/getLeaveByLeaveId" }, method = RequestMethod.POST)
+	public @ResponseBody GetApplyLeave getLeaveByLeaveId(@RequestParam("leaveId") int leaveId) {
 
 		GetApplyLeave leaveList = new GetApplyLeave();
 
