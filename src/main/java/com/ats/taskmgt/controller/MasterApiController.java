@@ -574,6 +574,28 @@ public class MasterApiController {
 		return responseTaskList;
 
 	}
+	
+	@RequestMapping(value = { "/deleteTask" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteTask(@RequestParam("taskId") int taskId) {
+	 
+		Info info = new Info();
+		
+		try {
+
+			taskRepository.deleteTask(taskId); 
+			info.setError(false);
+			info.setMessage("Deleted");
+			
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage("Error in Deleted");
+
+		}
+		return info;
+
+	}
 
 	@RequestMapping(value = { "/getTaskById" }, method = RequestMethod.POST)
 	public @ResponseBody Task getTaskById(@RequestParam("taskId") int taskId) {
