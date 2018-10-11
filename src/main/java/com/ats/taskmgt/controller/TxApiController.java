@@ -446,8 +446,8 @@ public class TxApiController {
 
 		try {
 
-			if (techId.contains(0) && phaseId.contains(0) && cmplxOptId.contains(0)) {
-				techList = getCmplxHrsRepo.getComplexAllocatedHrs();
+			if (techId.contains(0) && phaseId.contains(0)) {
+				techList = getCmplxHrsRepo.getComplexAllocatedHrs(cmplxOptId);
 			} else {
 				techList = getCmplxHrsRepo.getComplexAllocatedHrsByList(techId, phaseId, cmplxOptId);
 			}
@@ -468,7 +468,7 @@ public class TxApiController {
 
 		try {
 
-			techList = getCmplxHrsRepo.getComplexAllocatedHrs();
+			techList = getCmplxHrsRepo.getComplexAllocatedHrsList();
 
 		} catch (Exception e) {
 
