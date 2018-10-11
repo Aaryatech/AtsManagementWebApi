@@ -18,9 +18,13 @@ import com.ats.taskmgt.model.Info;
 import com.ats.taskmgt.model.leave.ApplyLeave;
 import com.ats.taskmgt.model.leave.GetApplyLeave;
 import com.ats.taskmgt.model.leave.GetLeaveCount;
+import com.ats.taskmgt.model.leave.GetShortLeave;
+import com.ats.taskmgt.model.leave.ShortLeave;
 import com.ats.taskmgt.repo.leave.ApplyLeaveRepo;
 import com.ats.taskmgt.repo.leave.GetApplyLeaveRepo;
 import com.ats.taskmgt.repo.leave.GetLeaveCountRepo;
+import com.ats.taskmgt.repo.leave.GetShortLeaveRepo;
+import com.ats.taskmgt.repo.leave.ShortLeaveRepo;
 
 @RestController
 public class LeaveApiController {
@@ -32,6 +36,12 @@ public class LeaveApiController {
 
 	@Autowired
 	GetApplyLeaveRepo getApplyLeaveRepo;
+
+	@Autowired
+	ShortLeaveRepo shortLeaveRepo;
+
+	@Autowired
+	GetShortLeaveRepo getShortLeaveRepo;
 
 	// --------------------------------------------------Leave-----------------------------------------------------
 
@@ -227,6 +237,94 @@ public class LeaveApiController {
 				leaveList.get(i).setToDate(DateConvertor.convertToDMY(leaveList.get(i).getToDate()));
 
 			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return leaveList;
+
+	}
+
+	// -------------------------------------------------Short-Leave----------------
+
+	@RequestMapping(value = { "/saveShortLeave" }, method = RequestMethod.POST)
+	public @ResponseBody ShortLeave saveShortLeave(@RequestBody ShortLeave shortLeave) {
+
+		ShortLeave shLeave = new ShortLeave();
+
+		try {
+			Date now = new Date();
+
+			SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy_MM_dd hh:mm:ss");
+			shortLeave.setDate(DateConvertor.convertToYMD(shortLeave.getDate()));
+			shortLeave.setApproveDate(sdf1.format(now));
+			shLeave = shortLeaveRepo.saveAndFlush(shortLeave);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return shLeave;
+
+	}
+
+	@RequestMapping(value = { "/getAllShortLeaveByEmpId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetShortLeave> getAllShortLeaveByEmpId(@RequestParam("empId") int empId) {
+
+		List<GetShortLeave> leaveList = new ArrayList<GetShortLeave>();
+
+		try {
+
+			leaveList = getShortLeaveRepo.getShortLeaveByEmpId(empId);
+			for (int i = 0; i < leaveList.size(); i++) {
+				leaveList.get(i).setDate(DateConvertor.convertToDMY(leaveList.get(i).getDate()));
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return leaveList;
+
+	}
+
+	@RequestMapping(value = { "/getAllShortLeaveListBySendTo" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetShortLeave> getAllShortLeaveListBySendTo(@RequestParam("empId") int empId) {
+
+		List<GetShortLeave> leaveList = new ArrayList<GetShortLeave>();
+
+		try {
+
+			leaveList = getShortLeaveRepo.getShortLeaveBySendTo(empId);
+			for (int i = 0; i < leaveList.size(); i++) {
+				leaveList.get(i).setDate(DateConvertor.convertToDMY(leaveList.get(i).getDate()));
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return leaveList;
+
+	}
+
+	@RequestMapping(value = { "/getShortLeaveByLeaveId" }, method = RequestMethod.POST)
+	public @ResponseBody GetShortLeave getShortLeaveByLeaveId(@RequestParam("shortLeaveId") int shortLeaveId) {
+
+		GetShortLeave leaveList = new GetShortLeave();
+
+		try {
+
+			leaveList = getShortLeaveRepo.getShortLeaveByLeaveId(shortLeaveId);
+
+			leaveList.setDate(DateConvertor.convertToDMY(leaveList.getDate()));
 
 		} catch (Exception e) {
 
