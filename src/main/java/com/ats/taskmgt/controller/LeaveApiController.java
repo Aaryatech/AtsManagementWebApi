@@ -335,4 +335,34 @@ public class LeaveApiController {
 
 	}
 
+	@RequestMapping(value = { "/checkShortLeave" }, method = RequestMethod.POST)
+	public @ResponseBody Info checkShortLeave(@RequestParam("empId") int empId) {
+
+		Info info = new Info();
+
+		List<ShortLeave> shortLeaveList = new ArrayList<ShortLeave>();
+
+		try {
+			shortLeaveList = shortLeaveRepo.getShortLeaveByEmpId(empId);
+
+			if (shortLeaveList.size() == 0) {
+				info.setError(false);
+				info.setMessage("Applicable");
+
+			} else if (shortLeaveList.size() > 0) {
+				info.setError(true);
+				info.setMessage("Not Applicable ");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage("exception ");
+
+		}
+		return info;
+
+	}
+
 }
