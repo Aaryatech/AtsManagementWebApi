@@ -9,7 +9,8 @@ import org.springframework.data.repository.query.Param;
 import com.ats.taskmgt.model.GetFormList;
 import com.ats.taskmgt.model.GetTask;
 
-public interface GetTaskRepository extends JpaRepository<GetTask, Integer>{
+public interface GetTaskRepository extends JpaRepository<GetTask, Integer>{ 
+	
 	
 	@Query(value="  select\r\n" + 
 			"    t.task_id,\r\n" + 
@@ -20,7 +21,7 @@ public interface GetTaskRepository extends JpaRepository<GetTask, Integer>{
 			"    t.form_id,\r\n" + 
 			"    f.form_name,\r\n" + 
 			"    t.task_type_id,\r\n" + 
-			"    tt.task_type_name,\r\n" + 
+			"    tt.cmplx_opt_name as task_type_name,\r\n" + 
 			"    t.task_name,\r\n" + 
 			"    t.task_description,\r\n" + 
 			"    t.task_sp_remarks,\r\n" + 
@@ -42,9 +43,9 @@ public interface GetTaskRepository extends JpaRepository<GetTask, Integer>{
 			"    t_projects p,\r\n" + 
 			"    t_forms f,\r\n" + 
 			"    t_modules m,\r\n" + 
-			"    m_task_type tt\r\n" + 
+			"    t_cmplx_option tt\r\n" + 
 			"    where \r\n" + 
-			"    t.task_type_id = tt.task_type_id\r\n" + 
+			"    t.task_type_id = tt.cmplx_opt_id\r\n" + 
 			"    and p.project_id = t.project_id\r\n" + 
 			"    and f.form_id = t.form_id\r\n" + 
 			"    and m.module_id = t.module_id\r\n" + 
@@ -60,7 +61,7 @@ public interface GetTaskRepository extends JpaRepository<GetTask, Integer>{
 			"    t.form_id,\r\n" + 
 			"    f.form_name,\r\n" + 
 			"    t.task_type_id,\r\n" + 
-			"    tt.task_type_name,\r\n" + 
+			"    tt.cmplx_opt_name as task_type_name,\r\n" + 
 			"    t.task_name,\r\n" + 
 			"    t.task_description,\r\n" + 
 			"    t.task_sp_remarks,\r\n" + 
@@ -82,9 +83,9 @@ public interface GetTaskRepository extends JpaRepository<GetTask, Integer>{
 			"    t_projects p,\r\n" + 
 			"    t_forms f,\r\n" + 
 			"    t_modules m,\r\n" + 
-			"    m_task_type tt\r\n" + 
+			"    t_cmplx_option tt\r\n" + 
 			"    where \r\n" + 
-			"    t.task_type_id = tt.task_type_id\r\n" + 
+			"    t.task_type_id = tt.cmplx_opt_id\r\n" + 
 			"    and p.project_id = t.project_id\r\n" + 
 			"    and f.form_id = t.form_id\r\n" + 
 			"    and m.module_id = t.module_id\r\n" + 
