@@ -28,8 +28,16 @@ public class ProjTaskDetail {
 	private String techName;
 	
 	
+	private String projName;
 	
-	
+	public String getProjName() {
+		return projName;
+	}
+
+	public void setProjName(String projName) {
+		this.projName = projName;
+	}
+
 	private float assignHr;
 	
 	private float planHr;
@@ -139,8 +147,8 @@ public class ProjTaskDetail {
 	public String toString() {
 		return "ProjTaskDetail [taskId=" + taskId + ", startDate=" + startDate + ", devStatus=" + devStatus
 				+ ", taskName=" + taskName + ", formName=" + formName + ", empName=" + empName + ", moduleName="
-				+ moduleName + ", techName=" + techName + ", assignHr=" + assignHr + ", planHr=" + planHr
-				+ ", actualHr=" + actualHr + ", empTaskCost=" + empTaskCost + "]";
+				+ moduleName + ", techName=" + techName + ", projName=" + projName + ", assignHr=" + assignHr
+				+ ", planHr=" + planHr + ", actualHr=" + actualHr + ", empTaskCost=" + empTaskCost + "]";
 	}
 	
 	
