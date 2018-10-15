@@ -51,6 +51,13 @@ public interface TaskRepository extends JpaRepository<Task, Integer>{
 	@Modifying
 	@Query(value="delete from Task where task_id = :taskId ")
 	void deleteTask(@Param("taskId") int taskId);
+	
+	@Transactional
+	@Modifying
+	@Query(value="UPDATE   Task SET devStatus=:devStatus,actualReqHrs=:actualReqHrs,"
+			+ "endDate=:endDate,endDatetime=:endDatetime WHERE taskId = :taskId ")
+	int completeTask(@Param("devStatus") int devStatus,@Param("actualReqHrs") String actualReqHrs,@Param("taskId") int taskId,
+			@Param("endDate") String endDate,@Param("endDatetime") String endDatetime);
 
 	 
 
