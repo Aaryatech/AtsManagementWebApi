@@ -26,7 +26,7 @@ public class ProjectApiController {
 
 	@Autowired
 	TaskRepository taskRepository;
-
+ 
 	@RequestMapping(value = { "/completeTask" }, method = RequestMethod.POST)
 	public @ResponseBody Info completeTask(@RequestBody List<CompleteTaskBean> taskList) {
 		Info info = new Info();
