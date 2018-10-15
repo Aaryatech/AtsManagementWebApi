@@ -199,6 +199,37 @@ public class LeaveApiController {
 
 	}
 
+	@RequestMapping(value = { "/getAllLeaveListReport" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetApplyLeave> getAllLeaveListReport(@RequestParam("empIdList") List<Integer> empIdList,
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
+
+		List<GetApplyLeave> leaveList = new ArrayList<GetApplyLeave>();
+
+		try {
+
+			if (empIdList.contains(0)) {
+				leaveList = getApplyLeaveRepo.getApplyLeaveReportBetweenDate(fromDate, toDate);
+			} else {
+				leaveList = getApplyLeaveRepo.getApplyLeaveReportByEmpIdList(empIdList, fromDate, toDate);
+			}
+
+			for (int i = 0; i < leaveList.size(); i++) {
+				leaveList.get(i).setDate(DateConvertor.convertToDMY(leaveList.get(i).getDate()));
+
+				leaveList.get(i).setFromDate(DateConvertor.convertToDMY(leaveList.get(i).getFromDate()));
+				leaveList.get(i).setToDate(DateConvertor.convertToDMY(leaveList.get(i).getToDate()));
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return leaveList;
+
+	}
+
 	@RequestMapping(value = { "/getLeaveByLeaveId" }, method = RequestMethod.POST)
 	public @ResponseBody GetApplyLeave getLeaveByLeaveId(@RequestParam("leaveId") int leaveId) {
 
